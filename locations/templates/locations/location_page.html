@@ -19,5 +19,12 @@
         </div>
     {% endfor %}
 
+    <iframe
+    width="600"
+    height="450"
+    frameborder="0" style="border:0"
+    src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.latitude}},{{page.specific.longitude}}&zoom=18&maptype=satellite" allowfullscreen>
+    </iframe>
     <p><a href="{{ page.get_parent.url }}">Return to locations</a></p>
 {% endblock %}
+
