@@ -1,0 +1,12 @@
+# mac
+.DS_Store
+
+# vim
+*.swp
+*~
+
+# python
+__pycache__/
+
+# sqlite
+db.sqlite3
