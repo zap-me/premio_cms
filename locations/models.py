@@ -2,7 +2,7 @@ from django.db import models
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import TaggedItemBase
+from taggit.models import Tag, TaggedItemBase
 
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
@@ -14,10 +14,11 @@ class LocationsIndexPage(Page):
     intro = RichTextField(blank=True)
 
     def get_context(self, request):
-        # Update context to include only published locations
         context = super().get_context(request)
-        locationpages = self.get_children().live()
-        context['locationpages'] = locationpages
+        tags = {}
+        for tag in  Tag.objects.all():
+            tags[tag] =  LocationPage.objects.filter(tags__name=tag).live()
+        context['locationpagetags'] = tags
         return context
 
     content_panels = Page.content_panels + [
@@ -79,7 +80,7 @@ class LocationTagIndexPage(Page):
 
         # Filter by tag
         tag = request.GET.get('tag')
-        locationpages = LocationPage.objects.filter(tags__name=tag)
+        locationpages = LocationPage.objects.filter(tags__name=tag).live()
 
         # Update template context
         context = super().get_context(request)
