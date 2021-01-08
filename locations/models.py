@@ -7,22 +7,89 @@ from taggit.models import Tag, TaggedItemBase
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.admin.edit_handlers import PageChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
+from wagtail.snippets.models import register_snippet
+
+def geo_coords_dist(lat1, lon1, lat2, lon2):
+    from math import sin, cos, sqrt, atan2, radians
+
+    # approximate radius of earth in km
+    R = 6373.0
+
+    lat1 = radians(lat1)
+    lon1 = radians(lon1)
+    lat2 = radians(lat2)
+    lon2 = radians(lon2)
+
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    distance = R * c
+
+    return distance
+
+def str2latlon(s):
+    lat = lon = 0
+    parts = s.split(',')
+    if len(parts) == 2:
+        try:
+            lat = float(parts[0])
+            lon = float(parts[1])
+        except ValueError:
+            pass
+    return lat, lon
 
 class LocationsIndexPage(Page):
     intro = RichTextField(blank=True)
+    show_near_me = models.BooleanField(default=True)
+    max_dist_km = models.IntegerField(default=50, verbose_name='maximum distance (km)')
 
     def get_context(self, request):
         context = super().get_context(request)
+        # tags
         tags = {}
         for tag in  Tag.objects.all():
             tags[tag] =  LocationPage.objects.filter(tags__name=tag).live()
         context['locationpagetags'] = tags
+        # locations near me
+        locationsnearme = []
+        if 'geo' in request.COOKIES:
+            lat, lon = str2latlon(request.COOKIES['geo'])
+            if lat and lon:
+                pages = LocationPage.objects.all().live()
+                for page in pages:
+                    page_lat, page_lon = str2latlon(page.lat_long)
+                    if page_lat and page_lon:
+                        d = geo_coords_dist(lat, lon, page_lat, page_lon)
+                        if d <= self.max_dist_km:
+                            locationsnearme.append(page)
+        context['locationsnearme'] = locationsnearme
         return context
 
     content_panels = Page.content_panels + [
-        FieldPanel('intro', classname="full")
+        FieldPanel('intro', classname="full"),
+        InlinePanel('promoted_pages', label="Promoted Locations"),
+        MultiFieldPanel([
+            FieldPanel('show_near_me'),
+            FieldPanel('max_dist_km'),
+        ], heading='Locations near me'),
+    ]
+
+class LocationsIndexPromotedPage(Orderable):
+    page = ParentalKey(LocationsIndexPage, on_delete=models.CASCADE, related_name='promoted_pages')
+    promoted_page = models.ForeignKey(
+        'wagtailcore.Page', on_delete=models.CASCADE, related_name='+'
+    )
+    caption = models.CharField(blank=True, max_length=250)
+
+    panels = [
+        PageChooserPanel('promoted_page', ['locations.LocationPage']),
+        FieldPanel('caption'),
     ]
 
 class LocationPageTag(TaggedItemBase):
