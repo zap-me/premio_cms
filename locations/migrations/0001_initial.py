@@ -25,8 +25,8 @@ class Migration(migrations.Migration):
                 ('date', models.DateField(verbose_name='Creation date')),
                 ('intro', models.CharField(max_length=250)),
                 ('body', wagtail.core.fields.RichTextField(blank=True)),
-                ('latitude', models.FloatField(blank=True)),
-                ('longitude', models.FloatField(blank=True)),
+                ('latitude', models.FloatField(null=True, blank=True)),
+                ('longitude', models.FloatField(null=True, blank=True)),
             ],
             options={
                 'abstract': False,

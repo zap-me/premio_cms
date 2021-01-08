@@ -36,8 +36,7 @@ class LocationPage(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=LocationPageTag, blank=True)
-    latitude = models.FloatField(blank=True)
-    longitude = models.FloatField(blank=True)
+    lat_long = models.CharField(blank=True, max_length=30, verbose_name='Latitude, longitude')
 
     def main_image(self):
         gallery_item = self.gallery_images.first()
@@ -55,8 +54,7 @@ class LocationPage(Page):
         MultiFieldPanel([
             FieldPanel('date'),
             FieldPanel('tags'),
-            FieldPanel('latitude'),
-            FieldPanel('longitude'),
+            FieldPanel('lat_long', heading='this seems to be ignored in favor of the field "name" or "verbose_name"'),
         ], heading="Location information"),
         FieldPanel('intro'),
         FieldPanel('body'),
