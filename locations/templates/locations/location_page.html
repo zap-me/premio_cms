@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags coords_formatting %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-locationpage{% endblock %}
 
@@ -18,14 +18,12 @@
             <p>{{ item.caption }}</p>
         </div>
     {% endfor %}
-    {% with page.specific.lat_long|split:"," as coords %}
        <iframe
        width="600"
        height="450"
        frameborder="0" style="border:0"
-       src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{coords.0}},{{coords.1}}&zoom=18&maptype=satellite" allowfullscreen>
+       src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.latitude}},{{page.specific.longitude}}&zoom=18&maptype=satellite" allowfullscreen>
        </iframe>
        <p><a href="{{ page.get_parent.url }}">Return to locations</a></p>
-    {% endwith %}
 {% endblock %}
 
