@@ -5,7 +5,9 @@
 {% block body_class %}template-locationsindexpage{% endblock %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
+
+
+    <h1 class="text-center mt-5">{{ page.title }}</h1>
 
     <div class="intro">{{ page.intro|richtext }}</div>
 
@@ -20,32 +22,44 @@
     </div>
     {% endif %}
 
-    {% for tag, pages in locationpagetags.items %}
-        <div>
-            <a href="{% slugurl 'tags' %}?tag={{ tag }}"><h2>{{ tag | title }}s</h2></a>
-            {% for child in pages %}
-                {% with child=child.specific %}
-                    <h3><a href="{% pageurl child %}">{{ child.title }}</a></h3>
-
-                    {% with child.main_image as main_image %}
-                        {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
-                    {% endwith %}
-
-                    <p>{{ child.intro }}</p>
-                    {{ child.body|richtext }}
-                {% endwith %}
-            {% endfor %}
-        </div>
-    {% endfor %}
 
     {% if locationsnearme %}
-        Near me:
-        <ul>
-        {% for page_near_me in locationsnearme %}
-            <li>{{ page_near_me.title }}</li>
-        {% endfor %}
-        </ul>
+       <h4 class="text-center mt-5"> Near me 📍 :</h4>
+	
+	<ul class="list-group mt-5 px-2 text-center">
+		{% for location_page in locationsnearme %}
+			{% if location_page == locationsnearme.0 %}
+ 				<a href="{% pageurl location_page  %}"><li class="list-group-item active">{{ location_page.title }}</li></a>
+			{% else %}
+				<a href="{% pageurl location_page  %}">
+					<li class="list-group-item">
+						{{location_page.title}}
+					</li>
+				</a>
+			
+			{% endif %}
+		{% endfor %}	
+	</ul>
     {% endif %}
+
+    
+    <h4 class="text-center mt-5"> Browse by Tag 🏷️ :</h4>
+	<div class="d-flex flex-row justify-content-between mt-5 px-2">
+
+    		{% for tag, pages in locationpagetags.items %}
+        		<div>
+            			<a href="{% slugurl 'tags' %}?tag={{ tag }}">
+
+					<button type="button" class="btn btn-primary">
+ 		 				{{tag | title }} 
+						<span class="badge badge-light">{{ tag|length }}</span>
+ 		 				<span class="sr-only">unread messages</span>
+					</button>
+
+           			 </a>
+        		</div>
+    		{% endfor %}
+	</div>
 
     <script>
         function setCookie(name, value, seconds) {
