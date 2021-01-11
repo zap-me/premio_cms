@@ -4,23 +4,23 @@
 {% block content %}
 
     {% if request.GET.tag|length %}
-        <h4>Showing pages tagged "{{ request.GET.tag }}"</h4>
+        <h4 class="mt-5 text-center">Showing pages tagged "{{ request.GET.tag }}"</h4>
     {% endif %}
 
     {% for locationpage in locationpages %}
+	 <ul class="list-group px-4 mt-5">
+	     {% if locationpage == locationpages.0 %}
+	        <a href="{% pageurl locationpage %}"><li class="list-group-item active text-center">{{ locationpage.title }}</li></a> 
+             {% else %}
 
-          <p>
-              <strong><a href="{% pageurl locationpage %}">{{ locationpage.title }}</a></strong><br />
-              <small>Revised: {{ locationpage.latest_revision_created_at }}</small><br />
-              {% if locationpage.author %}
-                <p>By {{ locationpage.author.profile }}</p>
-              {% endif %}
-          </p>
+	        <a href="{% pageurl locationpage %}"><li class="list-group-item text-center">{{ locationpage.title }}</li></a> 
+             {% endif %}
+        </ul>
 
     {% empty %}
         No pages found with that tag.
     {% endfor %}
 
-   <p><a href="{{ page.get_parent.url }}">Return to {{page.get_parent.title}}</a></p>
+   <p class="mt-5 text-center"><a href="{{ page.get_parent.url }}">Return to {{page.get_parent.title}}</a></p>
    
 {% endblock %}
