@@ -45,6 +45,8 @@ def str2latlon(s):
     return lat, lon
 
 class LocationsIndexPage(Page):
+    promotion_title=models.CharField(max_length=100, default="promotion title goes here")
+    promotion_description=models.CharField(max_length=250, default="promotion desscription goes here")
     intro = RichTextField(blank=True)
     show_near_me = models.BooleanField(default=True)
     max_dist_km = models.IntegerField(default=50, verbose_name='maximum distance (km)')
@@ -77,6 +79,8 @@ class LocationsIndexPage(Page):
         MultiFieldPanel([
             FieldPanel('show_near_me'),
             FieldPanel('max_dist_km'),
+            FieldPanel('promotion_title'),
+            FieldPanel('promotion_description'),
         ], heading='Locations near me'),
     ]
 
