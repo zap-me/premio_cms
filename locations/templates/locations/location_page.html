@@ -11,11 +11,11 @@
     <div class="intro text-center">{{ page.intro }}</div>
 
     {{ page.body|richtext }}
-
+    {{ page.gallery_images }}
     <div style="display: flex">
     {% for item in page.gallery_images.all %}
         <div style="float: left; margin: 10px">
-            {% image item.image fill-320x240 as store_photo%}
+            {% image item.image fill-320x240 %}
             <p>{{ item.caption }}</p>
         </div>
     {% endfor %}
