@@ -12,6 +12,14 @@
     <div class="intro">{{ page.intro|richtext }}</div>
 
     {% if page.promoted_pages.count %}
+    {% if page.promoted_pages_title %}
+    <div>
+        <h2 class="text-center mt-5">{{ page.promoted_pages_title }}</h2>
+        {% if page.promoted_pages_intro %}
+            <div class="intro">{{ page.promoted_pages_intro|richtext }}</div>
+        {% endif %}
+    </div>
+    {% endif %}
     <div id="promotedCarousel" class="carousel slide bg-secondary" data-ride="carousel">
         {% if indexed_promoted_pages|length <= 8 %}
         <ol class="carousel-indicators">
