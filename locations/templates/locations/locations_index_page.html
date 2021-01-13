@@ -58,6 +58,7 @@
     {% endif %}
 
     {% for tag, pages in locationpagetags.items %}
+        {% if pages.count %}
         <a href="{% slugurl 'tags' %}?tag={{ tag }}"><h2 class="text-center mt-5">{{ tag | title }}s</h2></a>
         <div class="row">
             {% for child in pages %}
@@ -75,6 +76,7 @@
                 {% endwith %}
             {% endfor %}
         </div>
+        {% endif %}
     {% endfor %}
 
     {% if locationsnearme %}
