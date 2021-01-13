@@ -5,40 +5,66 @@
 {% block body_class %}template-locationpage{% endblock %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
-    <p class="meta">{{ page.date }}</p>
 
-    <div class="intro">{{ page.intro }}</div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h1>{{ page.title }}</h1>
+                <p class="meta">{{ page.date }}</p>
+                <div class="intro">
+                    {{ page.intro }}
+                </div>
+                <div class="page-body">
+                    {{ page.body|richtext }}
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {{ page.body|richtext }}
-
-    <div style="display: flex">
+    <div class="row">
     {% for item in page.gallery_images.all %}
-        <div style="float: left; margin: 10px">
+        <div class="col">
+            <div class="text-center">
             {% image item.image fill-320x240 %}
             <p>{{ item.caption }}</p>
+            </div>
         </div>
     {% endfor %}
     </div>
 
     {% if page.tags.all.count %}
-    <div class="tags">
-        <h3>Tags</h3>
-        {% for tag in page.tags.all %}
-            <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button">{{ tag }}</button></a>
-        {% endfor %}
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+            <h3>Tags</h3>
+            {% for tag in page.tags.all %}
+                <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button" class="btn-sm btn-info">{{ tag }}</button></a>
+            {% endfor %}
+            </div>
+        </div>
     </div>
     {% endif %}
 
     {% if page.lat_long %}
-    <div class="map">
-        <h3>Map</h3>
-        <iframe
-            width="600" height="450" frameborder="0" style="border:0"
-            src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18&maptype=satellite" allowfullscreen>
-       </iframe>
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center">Map</h3>
+            <iframe
+                class="mx-auto d-block"
+                width="400" height="250" frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18&maptype=satellite" allowfullscreen>
+            </iframe>
+        </div>
     </div>
    {% endif %}
 
-   <p><a href="{{ page.get_parent.url }}">Return to {{page.get_parent.title}}</a></p>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <a href="{{ page.get_parent.url }}">
+                    <button type="button" class="btn btn-outline-primary">Return to {{page.get_parent.title}}</button>
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

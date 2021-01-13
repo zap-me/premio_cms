@@ -5,26 +5,56 @@
 {% block body_class %}template-locationsindexpage{% endblock %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
+
+
+    <h1 class="text-center mt-5">{{ page.title }}</h1>
 
     <div class="intro">{{ page.intro|richtext }}</div>
 
     {% if page.promoted_pages.count %}
-    <div class="promoted_pages">
-        Promoted:
-        <ul>
-        {% for promoted_page in page.promoted_pages.all %}
-            <li>{{ promoted_page.page.title }}</li>
-        {% endfor %}
-        </ul>
+    <div id="promotedCarousel" class="carousel slide bg-secondary" data-ride="carousel">
+        {% if indexed_promoted_pages|length <= 8 %}
+        <ol class="carousel-indicators">
+            {% for i,p in indexed_promoted_pages %}
+            <li data-target="#promotedCarousel" data-slide-to="{{i}}" {% if i == 0 %}class="active"{% endif %}></li>
+            {% endfor %}
+        </ol>
+        {% endif %}
+        <div class="carousel-inner">
+            {% for i,p in indexed_promoted_pages %}
+            <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                {% with p.promoted_page.specific as promoted_page %}
+                {% with promoted_page.main_image as main_image %}
+                    {% if main_image %}{% image main_image fill-300x150 class="mx-auto d-block" %}{% endif %}
+                {% endwith %}
+                {% endwith %}
+                <div class="carousel-caption d-none d-md-block">
+                    {% if p.caption %}
+                    <h5>{{ p.caption }}</h5>
+                    {% else %}
+                    <h5>{{ p.promoted_page.title }}</h5>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#promotedCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#promotedCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
     {% endif %}
 
     {% for tag, pages in locationpagetags.items %}
-        <div>
-            <a href="{% slugurl 'tags' %}?tag={{ tag }}"><h2>{{ tag | title }}s</h2></a>
+        <a href="{% slugurl 'tags' %}?tag={{ tag }}"><h2 class="text-center mt-5">{{ tag | title }}s</h2></a>
+        <div class="row">
             {% for child in pages %}
                 {% with child=child.specific %}
+                <div class="col-sm">
                     <h3><a href="{% pageurl child %}">{{ child.title }}</a></h3>
 
                     {% with child.main_image as main_image %}
@@ -33,20 +63,32 @@
 
                     <p>{{ child.intro }}</p>
                     {{ child.body|richtext }}
+                </div>
                 {% endwith %}
             {% endfor %}
         </div>
     {% endfor %}
 
     {% if locationsnearme %}
-        Near me:
-        <ul>
-        {% for page_near_me in locationsnearme %}
-            <li>{{ page_near_me.title }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+    <h2 class="text-center mt-5">Locations Near Me</h2>
+    {% for page in locationsnearme %}
+        <div class="row">
+            {% with page=page.specific %}
+            <div class="col-sm">
+                <h3><a href="{% pageurl page %}">{{ page.title }}</a></h3>
 
+                {% with page.main_image as main_image %}
+                    {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
+                {% endwith %}
+
+                <p>{{ page.intro }}</p>
+                {{ page.body|richtext }}
+            </div>
+            {% endwith %}
+        </div>
+    {% endfor %}
+    {% endif %}
+    
     <script>
         function setCookie(name, value, seconds) {
             var expires = "";
@@ -56,6 +98,7 @@
                 expires = "; expires=" + date.toUTCString();
             }
             document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+            console.log('setCookie: ' + name + '=' + value);
         }
 
         function getCookie(name) {
@@ -64,19 +107,32 @@
             for(var i=0; i < ca.length; i++) {
                 var c = ca[i];
                 while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                if (c.indexOf(nameEQ) == 0) {
+                    var value = c.substring(nameEQ.length, c.length);
+                    console.log('getCookie: ' + name + '=' + value);
+                    return value;
+                }
             }
             return null;
         }
 
-        function setPositionAndReload(position) {
+        function geoLocation(position) {
+            console.log('geolocation:' + position);
             setCookie('geo', position.coords.latitude + ',' + position.coords.longitude, 300);
             location.reload();
         }
+
+        function geoError(error){
+            console.log("error " + error.code);
+        }
     
         if (getCookie('geo') == null) {
+            console.log('requesting geolocation..');
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(setPositionAndReload);
+                navigator.geolocation.getCurrentPosition(geoLocation, geoError);
+            }
+            else {
+                console.error('geolocation not supported');
             }
         }
     </script>

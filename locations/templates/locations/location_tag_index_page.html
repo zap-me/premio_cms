@@ -1,26 +1,46 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
 
     {% if request.GET.tag|length %}
-        <h4>Showing pages tagged "{{ request.GET.tag }}"</h4>
+    <div class="row">
+        <div class="col">
+            <h4 class="mt-5 text-center">Showing pages tagged "{{ request.GET.tag }}"</h4>
+        </div>
+    </div>
     {% endif %}
 
-    {% for locationpage in locationpages %}
+    <div class="row">
+    {% for page in locationpages %}
+        {% with page=page.specific %}
+        <div class="col-sm">
+            <h3><a href="{% pageurl page %}">{{ page.title }}</a></h3>
 
-          <p>
-              <strong><a href="{% pageurl locationpage %}">{{ locationpage.title }}</a></strong><br />
-              <small>Revised: {{ locationpage.latest_revision_created_at }}</small><br />
-              {% if locationpage.author %}
-                <p>By {{ locationpage.author.profile }}</p>
-              {% endif %}
-          </p>
+            {% with page.main_image as main_image %}
+                {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
+            {% endwith %}
 
+            <p>{{ page.intro }}</p>
+            {{ page.body|richtext }}
+        </div>
+        {% endwith %}
     {% empty %}
-        No pages found with that tag.
+        <div class="col">
+            No pages found with that tag.
+        </div>
     {% endfor %}
+    </div>
 
-   <p><a href="{{ page.get_parent.url }}">Return to {{page.get_parent.title}}</a></p>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <a href="{{ page.get_parent.url }}">
+                    <button type="button" class="btn btn-outline-primary">Return to {{page.get_parent.title}}</button>
+                </a>
+            </div>
+        </div>
+    </div>
    
 {% endblock %}

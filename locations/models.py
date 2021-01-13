@@ -51,6 +51,12 @@ class LocationsIndexPage(Page):
 
     def get_context(self, request):
         context = super().get_context(request)
+        # promoted pages
+        indexed_promoted_pages = []
+        promoted_pages = self.promoted_pages.all()
+        for i in range(len(promoted_pages)):
+            indexed_promoted_pages.append((i, promoted_pages[i]))
+        context['indexed_promoted_pages'] = indexed_promoted_pages
         # tags
         tags = {}
         for tag in  Tag.objects.all():
