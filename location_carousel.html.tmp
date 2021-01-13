@@ -1,0 +1,4 @@
+
+{% for carousel in locationcarousels %}
+	<p>{{ carousel.location_title }}</p>
+{% endfor %}
