@@ -11,6 +11,7 @@ from wagtail.admin.edit_handlers import PageChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 def geo_coords_dist(lat1, lon1, lat2, lon2):
     from math import sin, cos, sqrt, atan2, radians
@@ -44,12 +45,27 @@ def str2latlon(s):
             pass
     return lat, lon
 
-class LocationsIndexPage(Page):
+class LocationsIndexPage(Page,RoutablePageMixin):
     intro = RichTextField(blank=True)
     show_near_me = models.BooleanField(default=True)
     max_dist_km = models.IntegerField(default=50, verbose_name='maximum distance (km)')
     promoted_pages_title = models.CharField(blank=True, max_length=250, verbose_name='Promoted Locations Title')
     promoted_pages_intro = RichTextField(blank=True, verbose_name='Promoted Locations Intro')
+
+
+    def get_location_pages(self):
+            return LocationPage.objects.descendant_of(self).live()
+
+    @route(r'^tags/$')
+    def post_search(self, request, *args, **kwargs):
+        search_query = request.GET.get('tag', None)
+        self.location_pages= self.get_location_pages()
+        if search_query:
+            self.location_pages= self.location_pages.filter(intro__contains=search_query)
+            self.search_term = search_query
+            self.search_type = 'search'
+        return Page.serve(self, request, *args, **kwargs)
+
 
     def get_context(self, request):
         context = super().get_context(request)

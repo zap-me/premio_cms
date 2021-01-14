@@ -1,0 +1,15 @@
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="col-sm">
+    <h3><a href="{% pageurl child_arg %}">{{ child_arg.title }}</a></h3>
+
+    {% with child_arg.main_image as main_image %}
+        {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
+    {% endwith %}
+
+    <p>{{ child_arg.intro }}</p>
+    {{ child_arg.body|richtext }}
+</div>
+
+
