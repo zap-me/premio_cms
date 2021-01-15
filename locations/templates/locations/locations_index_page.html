@@ -1,44 +1,10 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-locationsindexpage{% endblock %}
 
 {% block content %}
-
-    {% if search_term %}
-      <header class="page-header">
-          <h1 class="page-title">Search Results for <span>{{ search_type }}: {{ search_term }}</span></h1>
-      </header>
-    {% endif %}
-
-    <div class="mt-4 search-holder d-flex flex-row justify-content-around">
-
-
-        <form class="form-inline my-2 my-lg-0" method="get" role="search" action="{% routablepageurl page 'post_search' %}">
-            <input class="form-control mr-sm-2 input-size" type="search" name="tag" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-        </form>
-
-    </div>
-
-
-    <!--
-    <h1 class="text-center mt-3">{{ page.title }}</h1>
-
-    <div class="intro">{{ page.intro|richtext }}</div>
-    -->
-    {% if page.promoted_pages.count %}
-    {% if page.promoted_pages_title %}
-    <!-- removed for simplicty - can add back later
-    <div>
-        <h2 class="text-center mt-5">{{ page.promoted_pages_title }}</h2>
-        {% if page.promoted_pages_intro %}
-            <div class="intro">{{ page.promoted_pages_intro|richtext }}</div>
-        {% endif %}
-    </div>
-    -->
-    {% endif %}
     <div class="card mt-2 shadow-lg p-3 mb-5 bg-white rounded">
         <h5 class="card-header bg-primary text-white text-center">Promotions</h5>
         <div class="card-body">
@@ -82,7 +48,6 @@
 
       </div>
     </div>
-    {% endif %}
     {% for tag, pages in locationpagetags.items %}
         {% if pages.count %}
 
@@ -158,5 +123,4 @@
             }
         }
     </script>
-
 {% endblock %}
