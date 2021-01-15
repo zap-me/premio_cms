@@ -91,7 +91,7 @@
 	    <button type="button" class="btn btn-primary">{{ tag | title }}</button>
           </h2>
         </a>
-        <div class="d-flex flex-column align-tems-center justify-content-start mt-3">
+        <div class="d-flex flex-column align-items-center justify-content-start mt-3">
             {% for child in pages %}
                 {% include "child_specific.html" with child_arg=child.specific %}
             {% endfor %}
@@ -104,7 +104,7 @@
         </h2>
 
 
-        <div class="d-flex flex-column align-tems-center justify-content-start mt-3">
+        <div class="d-flex flex-column align-items-center justify-content-start mt-3">
             {% for page in locationsnearme %}
                 {% include "child_specific.html" with child_arg=page.specific %}
             {% endfor %}

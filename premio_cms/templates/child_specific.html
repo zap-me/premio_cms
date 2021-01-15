@@ -4,17 +4,20 @@
 <!-- bootstrap css -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+<a href="{% pageurl child_arg %}" style="text-decoration:none;">
 
-<div class="card shadow-lg mb-2 rounded" style="width: 18rem;">
-  {% with child_arg.main_image as main_image %}
-    {% if main_image %}{% image main_image fill-160x200 class="card-img card-img-size" %}{% endif %}
-  {% endwith %}
-  <div class="card-img-overlay">
-    <h5 class="card-title">{{ child_arg.title }}</h5>
-    <p class="card-text">{{ child_arg.body|richtext }}</p>
-    <a href="{% pageurl child_arg %}" class="btn btn-primary">Go</a>
+
+  <div class="card shadow-lg p-3 mb-5 rounded" style="width: 18rem;">
+
+    {% with child_arg.main_image as main_image %}
+      {% if main_image %}{% image main_image fill-160x200 class="card-img-top" %}{% endif %}
+    {% endwith %}
+
+    <div class="card-body">
+      <p class="card-text">{{ child_arg.title }}</p>
+    </div>
   </div>
-</div>
+</a>
 
 <!-- bootstrap js-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
