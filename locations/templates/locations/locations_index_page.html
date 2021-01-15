@@ -91,7 +91,7 @@
 	    <button type="button" class="btn btn-primary">{{ tag | title }}</button>
           </h2>
         </a>
-        <div class="d-flex flex-column align-tems-center justify-content-start">
+        <div class="d-flex flex-column align-tems-center justify-content-start mt-3">
             {% for child in pages %}
                 {% include "child_specific.html" with child_arg=child.specific %}
             {% endfor %}
@@ -99,23 +99,16 @@
         {% endif %}
     {% endfor %}
     {% if locationsnearme %}
-        <h2 class="text-center mt-5">Locations Near Me</h2>
-        {% for page in locationsnearme %}
-            <div class="row">
-                {% with page=page.specific %}
-                    <div class="col-sm">
-                    <h3><a href="{% pageurl page %}">{{ page.title }}</a></h3>
+        <h2 class="text-center mt-5">
+            <button type="button" class="btn btn-primary">Near me 📌</button>
+        </h2>
 
-                    {% with page.main_image as main_image %}
-                        {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
-                    {% endwith %}
 
-                    <p>{{ page.intro }}</p>
-                    {{ page.body|richtext }}
-                    </div>
-                {% endwith %}
-            </div>
-        {% endfor %}
+        <div class="d-flex flex-column align-tems-center justify-content-start mt-3">
+            {% for page in locationsnearme %}
+                {% include "child_specific.html" with child_arg=page.specific %}
+            {% endfor %}
+        </div>
     {% endif %}
     
     <script>
