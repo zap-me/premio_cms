@@ -93,7 +93,7 @@
         </a>
         <div class="d-flex flex-column align-items-center justify-content-start mt-3">
             {% for child in pages %}
-                {% include "child_specific.html" with child_arg=child.specific %}
+                {% include "location_preview.html" with page=child.specific %}
             {% endfor %}
         </div>
         {% endif %}
@@ -106,7 +106,7 @@
 
         <div class="d-flex flex-column align-items-center justify-content-start mt-3">
             {% for page in locationsnearme %}
-                {% include "child_specific.html" with child_arg=page.specific %}
+                {% include "location_preview.html" with page=page.specific %}
             {% endfor %}
         </div>
     {% endif %}
