@@ -9,7 +9,28 @@
     <div class="row">
         <div class="col">
             <div class="text-center">
-                <h1>{{ page.title }}</h1>
+		<div class="alert alert-primary mt-2">
+
+                	<h1>{{ page.title }}</h1>
+
+		</div>
+
+
+
+
+
+   		<div class="row">
+   		{% for item in page.gallery_images.all %}
+   		    <div class="col">
+   		        <div class="text-center">
+   		        {% image item.image fill-320x240 %}
+   		        <p>{{ item.caption }}</p>
+   		        </div>
+   		    </div>
+   		{% endfor %}
+   		</div>
+
+
                 <p class="meta">{{ page.date }}</p>
                 <div class="intro">
                     {{ page.intro }}
@@ -21,16 +42,6 @@
         </div>
     </div>
 
-    <div class="row">
-    {% for item in page.gallery_images.all %}
-        <div class="col">
-            <div class="text-center">
-            {% image item.image fill-320x240 %}
-            <p>{{ item.caption }}</p>
-            </div>
-        </div>
-    {% endfor %}
-    </div>
 
     {% if page.tags.all.count %}
     <div class="row">
@@ -38,7 +49,7 @@
             <div class="text-center">
             <h3>Tags</h3>
             {% for tag in page.tags.all %}
-                <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button" class="btn-sm btn-info">{{ tag }}</button></a>
+                <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button" class="btn btn-primary">{{ tag }}</button></a>
             {% endfor %}
             </div>
         </div>
@@ -60,7 +71,7 @@
     </div>
    {% endif %}
 
-    <div class="row">
+    <div class="row mt-4">
         <div class="col">
             <div class="text-center">
                 <a href="{{ page.get_parent.url }}">
