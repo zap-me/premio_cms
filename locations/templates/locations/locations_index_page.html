@@ -5,6 +5,8 @@
 {% block body_class %}template-locationsindexpage{% endblock %}
 
 {% block content %}
+
+{% if indexed_promoted_pages %}
     <div class="card mt-2 shadow-lg p-3 mb-5 bg-white rounded">
         <h5 class="card-header bg-primary text-white text-center">Promotions</h5>
         <div class="card-body">
@@ -48,6 +50,7 @@
 
       </div>
     </div>
+{% endif %}
     {% for tag, pages in locationpagetags.items %}
         {% if pages.count %}
 
