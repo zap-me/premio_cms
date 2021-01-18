@@ -14,18 +14,7 @@
 
     <div class="row">
     {% for page in locationpages %}
-        {% with page=page.specific %}
-        <div class="col-sm">
-            <h3><a href="{% pageurl page %}">{{ page.title }}</a></h3>
-
-            {% with page.main_image as main_image %}
-                {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
-            {% endwith %}
-
-            <p>{{ page.intro }}</p>
-            {{ page.body|richtext }}
-        </div>
-        {% endwith %}
+        {% include "location_preview.html" with page=page.specific %}
     {% empty %}
         <div class="col">
             No pages found with that tag.

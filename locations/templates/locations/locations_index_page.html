@@ -62,18 +62,7 @@
         <a href="{% slugurl 'tags' %}?tag={{ tag }}"><h2 class="text-center mt-5">{{ tag | title }}</h2></a>
         <div class="row">
             {% for child in pages %}
-                {% with child=child.specific %}
-                <div class="col-sm">
-                    <h3><a href="{% pageurl child %}">{{ child.title }}</a></h3>
-
-                    {% with child.main_image as main_image %}
-                        {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
-                    {% endwith %}
-
-                    <p>{{ child.intro }}</p>
-                    {{ child.body|richtext }}
-                </div>
-                {% endwith %}
+                {% include "location_preview.html" with page=child.specific %}
             {% endfor %}
         </div>
         {% endif %}
@@ -83,18 +72,7 @@
     <h2 class="text-center mt-5">Locations Near Me</h2>
     {% for page in locationsnearme %}
         <div class="row">
-            {% with page=page.specific %}
-            <div class="col-sm">
-                <h3><a href="{% pageurl page %}">{{ page.title }}</a></h3>
-
-                {% with page.main_image as main_image %}
-                    {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
-                {% endwith %}
-
-                <p>{{ page.intro }}</p>
-                {{ page.body|richtext }}
-            </div>
-            {% endwith %}
+            {% include "location_preview.html" with page=page.specific %}
         </div>
     {% endfor %}
     {% endif %}
