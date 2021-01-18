@@ -5,32 +5,22 @@
 {% block body_class %}template-locationpage{% endblock %}
 
 {% block content %}
-
     <div class="row">
         <div class="col">
             <div class="text-center">
-		<div class="alert alert-primary mt-2">
-
-                	<h1>{{ page.title }}</h1>
-
-		</div>
-
-
-
-
-
-   		<div class="row">
-   		{% for item in page.gallery_images.all %}
-   		    <div class="col">
-   		        <div class="text-center">
-   		        {% image item.image fill-320x240 %}
-   		        <p>{{ item.caption }}</p>
-   		        </div>
-   		    </div>
-   		{% endfor %}
-   		</div>
-
-
+        <div class="alert alert-primary mt-2">
+                    <h1>{{ page.title }}</h1>
+        </div>
+        <div class="row">
+        {% for item in page.gallery_images.all %}
+            <div class="col">
+                <div class="text-center">
+                {% image item.image fill-320x240 %}
+                <p>{{ item.caption }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
                 <p class="meta">{{ page.date }}</p>
                 <div class="intro">
                     {{ page.intro }}
@@ -41,8 +31,6 @@
             </div>
         </div>
     </div>
-
-
     {% if page.tags.all.count %}
     <div class="row">
         <div class="col">
@@ -55,10 +43,7 @@
         </div>
     </div>
     {% endif %}
-
     {% if page.lat_long %}
-
-
     <div class="row">
         <div class="col">
             <h3 class="text-center">Map</h3>
@@ -70,7 +55,6 @@
         </div>
     </div>
    {% endif %}
-
     <div class="row mt-4">
         <div class="col">
             <div class="text-center">

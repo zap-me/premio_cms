@@ -10,8 +10,6 @@
     <div class="card mt-2 shadow-lg p-3 mb-5 bg-white rounded">
         <h5 class="card-header bg-primary text-white text-center">Promotions</h5>
         <div class="card-body">
-
-        
         <div id="promotedCarousel" class="carousel slide bg-secondary" data-ride="carousel">
             {% if indexed_promoted_pages|length <= 8 %}
                 <ol class="carousel-indicators">
@@ -47,7 +45,6 @@
                 <span class="sr-only">Next</span>
             </a>
        </div>
-
       </div>
     </div>
 {% endif %}
@@ -56,7 +53,7 @@
 
         <a href="{% slugurl 'tags' %}?tag={{ tag }}">
           <h2 class="text-center mt-5">
-	    <button type="button" class="btn btn-primary">{{ tag | title }}</button>
+        <button type="button" class="btn btn-primary">{{ tag | title }}</button>
           </h2>
         </a>
         <div class="d-flex flex-column align-items-center justify-content-start mt-3">
@@ -70,15 +67,12 @@
         <h2 class="text-center mt-5">
             <button type="button" class="btn btn-primary">Near me 📌</button>
         </h2>
-
-
         <div class="d-flex flex-column align-items-center justify-content-start mt-3">
             {% for page in locationsnearme %}
                 {% include "location_preview.html" with page=page.specific %}
             {% endfor %}
         </div>
     {% endif %}
-    
     <script>
         function setCookie(name, value, seconds) {
             var expires = "";

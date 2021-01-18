@@ -1,19 +1,11 @@
-{% extends "base.html" %}
-
 {% load wagtailcore_tags wagtailimages_tags %}
-{% block content %}
-<a href="{% pageurl page %}" style="text-decoration:none;">
-
-
-  <div class="card shadow-lg p-3 mb-5 rounded" style="width: 18rem;">
-
+<a href="{% pageurl page %}">
+  <div class="card shadow-lg p-3 mb-5 rounded location-container-width">
     {% with page.main_image as main_image %}
       {% if main_image %}{% image main_image fill-160x200 class="card-img-top" %}{% endif %}
     {% endwith %}
-
     <div class="card-body">
       <p class="card-text text-center">{{ page.title }}</p>
     </div>
   </div>
 </a>
-{% endblock %}

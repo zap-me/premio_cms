@@ -51,10 +51,6 @@ class LocationsIndexPage(Page):
     promoted_pages_title = models.CharField(blank=True, max_length=250, verbose_name='Promoted Locations Title')
     promoted_pages_intro = RichTextField(blank=True, verbose_name='Promoted Locations Intro')
 
-
-    def get_location_pages(self):
-            return LocationPage.objects.descendant_of(self).live()
-
     def get_context(self, request):
         context = super().get_context(request)
         # promoted pages
