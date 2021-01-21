@@ -1,0 +1,72 @@
+
+
+body {
+
+    margin: 0;
+    padding: 0;
+}
+
+.swiper-container {
+
+
+    height: 25vh;
+    width: 100vw;
+
+}
+
+swiper-promotions-container {
+
+    height: 35vh;
+    width: 100vw;
+
+}
+
+.container {
+
+    padding: 0;
+    margin: 0;
+
+}
+
+.rounded-corners {
+
+    border-radius: 6%;
+
+}
+
+.card-img-top {
+
+    height: 100%;
+    width: 100%;
+
+}
+
+.placeholder-div {
+
+    width: 100vw;
+    height: 0.8vh;
+    background-color: #dbdbdb;
+
+}
+
+.content-title-holder {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+
+}
+
+.a-color, .a-color:hover {
+
+    color: black;
+    text-decoration: none;
+}
+
+.svg-special-label {
+
+    width: 27px;
+    height: 27px;
+
+}
