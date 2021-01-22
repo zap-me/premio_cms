@@ -1,4 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;600&display=swap');
 
+
+* {
+
+
+}
 
 body {
 
@@ -17,6 +23,13 @@ body {
 swiper-promotions-container {
 
     height: 35vh;
+    width: 100vw;
+
+}
+
+.swiper-location-page-images {
+
+    height: 27vh;
     width: 100vw;
 
 }
@@ -68,5 +81,35 @@ swiper-promotions-container {
 
     width: 27px;
     height: 27px;
+
+}
+
+.location-page-img {
+    
+    width: 100vw;
+    height: 25vh;
+    object-fit: cover;
+
+}
+
+.body-font {
+    color:#656565;
+    font-size: 14px;
+
+}
+
+.premio-back-btn {
+    position: fixed;
+    z-index: 999;
+    margin-top: 30px;
+    margin-left: 15px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    background-color: #fafafa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 
 }
