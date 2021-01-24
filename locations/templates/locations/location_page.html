@@ -5,9 +5,11 @@
 {% block body_class %}template-locationpage{% endblock %}
 
 {% block content %}
+<div id="page-container">
+
 
     <a href="{{ page.get_parent.url }}">
-        <div class="premio-back-btn">
+        <div class="premio-back-btn premio-back-btn anm fdr">
             <img src="https://img.icons8.com/android/96/000000/back.png" width="15px" height="15px"/>
         </div>
     </a>
@@ -24,7 +26,7 @@
     {% if page.lat_long %}
     <div class="row">
 
-    <div class="row" style="width:90vw;">
+    <div class="row anm fdr" style="width:90vw;">
         <div class="col">
             <div class="ml-4">
                 <h2>{{ page.title }}</h2>
@@ -53,12 +55,15 @@
             <div class="text-center">
                 <h5>Tags</h5>
                 {% for tag in page.tags.all %}
-                <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button" class="btn-sm btn-info">{{ tag }}</button></a>
+                <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag }}</a>
                 {% endfor %}
             </div>
         </div>
     </div>
     {% endif %}
+
+
+</div>
 
 <script>
 
@@ -83,7 +88,6 @@
 
 
     });
-
 </script>
 {% endblock %}
 

@@ -1,11 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;600&display=swap');
 
 
-* {
-
-
-}
-
 body {
 
     margin: 0;
@@ -113,3 +108,49 @@ swiper-promotions-container {
 
 
 }
+
+/* use .anm then an animation class e.g. .fdr to easily animate elements */
+
+.anm {
+
+    animation-duration: 0.25s;
+    transition-timing-function: ease-in;
+    animation-fill-mode: both;
+}
+
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fdr {
+    animation-name: fadeInRight;
+}
+
+/* fade in up -- easy class to add to elements */
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+.fdu {
+    animation-name: fadeInUp;    
+}
+

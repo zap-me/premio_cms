@@ -15,7 +15,7 @@
        <img class="svg-special-label mr-4 mb-2" src="https://svgshare.com/i/TJu.svg"/>
     </div>
     {% if page.promoted_pages.count %}
-    <div class="swiper-promotions-container mt-4">
+    <div class="swiper-promotions-container mt-4 anm fdu">
 
         <div class="swiper-wrapper"> 
             {% for i,p in indexed_promoted_pages %}
@@ -33,7 +33,7 @@
 
     {% for tag, pages in locationpagetags.items %}
         {% if pages.count %}
-        <div class="content-title-holder">
+        <div class="content-title-holder anm fdu">
 
             <h2 class="ml-4">{{ tag | title }}</h2>
             <a class="a-color" href="{% slugurl 'tags' %}?tag={{ tag }}"><p class="mr-3  mt-3">See all</p></a>
