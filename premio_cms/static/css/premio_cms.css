@@ -1,5 +1,188 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;600&display=swap');
 
+/* mobile devices */
+
+@media only screen and (max-width: 844px) {
+
+       
+	body {
+
+            margin: 0;
+	    padding: 0;
+	}
+
+	.swiper-container {
+
+
+            height: 25vh;
+            width: 100vw;
+
+	}
+
+	swiper-promotions-container {
+
+            height: 35vh;
+            width: 100vw;
+
+	}
+
+	.swiper-location-page-images {
+
+           height: 27vh;
+           width: 100vw;
+            
+	}
+
+	.container {
+
+          padding: 0;
+          margin: 0;
+
+	}
+
+	.rounded-corners {
+
+	    border-radius: 6%;
+
+	}
+
+	.card-img-top {
+
+            height: 100%;
+width: 100%;
+
+	}
+
+	.placeholder-div {
+
+width: 100vw;
+height: 0.8vh;
+	background-color: #dbdbdb;
+
+	}
+
+	.content-title-holder {
+
+display: flex;
+	 justify-content: space-between;
+	 align-items: center;
+	 margin-top: 4px;
+
+	}
+
+	.a-color, .a-color:hover {
+
+color: black;
+       text-decoration: none;
+	}
+
+	.svg-special-label {
+
+width: 27px;
+height: 27px;
+
+	}
+
+	.location-page-img {
+
+width: 100vw;
+height: 25vh;
+	object-fit: cover;
+
+	}
+
+	.body-font {
+color:#656565;
+      font-size: 14px;
+
+	}
+
+	.premio-back-btn {
+position: fixed;
+	  z-index: 999;
+	  margin-top: 30px;
+	  margin-left: 15px;
+	  border-radius: 50%;
+width: 45px;
+height: 45px;
+	background-color: #fafafa;
+display: flex;
+	 justify-content: center;
+	 align-items: center;
+
+
+	}
+
+	/* use .anm then an animation class e.g. .fdr to easily animate elements */
+
+	.anm {
+
+		animation-duration: 0.25s;
+		transition-timing-function: ease-in;
+		animation-fill-mode: both;
+	}
+
+
+	@keyframes fadeInRight {
+		0% {
+opacity: 0;
+transform: translate3d(100%, 0, 0);
+		}
+
+		100% {
+opacity: 1;
+transform: none;
+		}
+	}
+
+	.fdr {
+		animation-name: fadeInRight;
+	}
+
+	/* fade in up -- easy class to add to elements */
+
+	@keyframes fadeInUp {
+		0% {
+opacity: 0;
+transform: translate3d(0, 100%, 0);
+		}
+
+		100% {
+opacity: 1;
+transform: none;
+		}
+	}
+
+
+	.fdu {
+		animation-name: fadeInUp;    
+	}
+
+	.index-pg-content {
+width: 100vw
+	       display: flex;
+       justify-content: start;
+       align-items: center;
+       flex-wrap: wrap;
+
+	}
+
+
+	.index-pg-content>*{
+flex:0 50%;
+	}
+
+	tag-img {
+width: 50%;
+
+	}
+
+
+
+
+}
+
+
 
 body {
 
@@ -17,7 +200,7 @@ body {
 
 swiper-promotions-container {
 
-    height: 35vh;
+    height: 15vh;
     width: 100vw;
 
 }
@@ -69,6 +252,7 @@ swiper-promotions-container {
 .a-color, .a-color:hover {
 
     color: black;
+
     text-decoration: none;
 }
 
@@ -152,5 +336,24 @@ swiper-promotions-container {
 
 .fdu {
     animation-name: fadeInUp;    
+}
+
+.index-pg-content {
+    width: 100vw
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+
+.index-pg-content>*{
+    flex:0 50%;
+}
+
+tag-img {
+    width: 50%;
+
 }
 

@@ -5,31 +5,21 @@
 {% block content %}
 
     {% if request.GET.tag|length %}
-    <div class="row">
-        <div class="col">
-            <h4 class="mt-5 text-center">Showing pages tagged "{{ request.GET.tag }}"</h4>
-        </div>
+    <div class="mt-2 d-flex justify-content-start align-items-center">
+        <a href="{{ page.get_parent.url }}">
+            <img src="https://img.icons8.com/android/96/000000/back.png" width="30px" height="30px"/>
+        </a>
+        <h5 class="mt-2 ml-4">{{ request.GET.tag }}</h5>
     </div>
     {% endif %}
 
-    <div class="row">
-    {% for page in locationpages %}
-        {% include "location_preview.html" with page=page.specific %}
-    {% empty %}
-        <div class="col">
-            No pages found with that tag.
-        </div>
-    {% endfor %}
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <div class="text-center">
-                <a href="{{ page.get_parent.url }}">
-                    <button type="button" class="btn btn-outline-primary">Return to {{page.get_parent.title}}</button>
-                </a>
+    <div class="mt-4 index-pg-content">
+        {% for page in locationpages %}
+            {% include "tags_page_item.html" with page=page.specific %}
+        {% empty %}
+            <div class="col">
+                 No pages found with that tag.
             </div>
-        </div>
+        {% endfor %}
     </div>
-   
 {% endblock %}
