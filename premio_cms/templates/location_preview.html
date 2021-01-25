@@ -1,13 +1,9 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
     <div class="swiper-slide">
-
-
-        <div class="card">
             <a href="{% pageurl page %}">
                 {% with page.main_image as main_image %}
                 {% if main_image %}{% image main_image fill-1000x1000-c100 class="card-img-top rounded-corners" %}{% endif %}
                 {% endwith %}
             </a>
-        </div>
     </div>
