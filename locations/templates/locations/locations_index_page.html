@@ -7,13 +7,8 @@
 {% block content %}
 <div class="page-content-shown">
 <!-- one of the templates will get rendered here depending on what the client device is -->
-
 </div>
 <template id='mobile-content'>
-
-
-
-
     <div class="placeholder-div mt-4"></div>
     <div class="content-title-holder">
        <h2 class="ml-4">Promotions</h2>
@@ -21,25 +16,20 @@
     </div>
     {% if page.promoted_pages.count %}
     <div class="swiper-promotions-container mt-4 anm fdu">
-
         <div class="swiper-wrapper"> 
             {% for i,p in indexed_promoted_pages %}
                 {% with p.promoted_page.specific as promoted_page %}	
-		    {% include "promotions-carousel.html" with page=promoted_page %}
+		    {% include "promotions-carousel.html" with p=p %}
                 {% endwith %}
             {% endfor %}
-            
         </div>
     </div>
-
-
     <div class="placeholder-div mt-4"></div>
     {% endif %}
 
     {% for tag, pages in locationpagetags.items %}
         {% if pages.count %}
         <div class="content-title-holder anm fdu">
-
             <h2 class="ml-4">{{ tag | title }}</h2>
             <a class="a-color" href="{% slugurl 'tags' %}?tag={{ tag }}"><p class="mr-3  mt-3">See all</p></a>
         </div>
@@ -50,7 +40,6 @@
 			{% endfor %}
                 </div>
         </div>
-
          <div class="placeholder-div mt-4"></div>
         {% endif %}
     {% endfor %}
@@ -61,17 +50,12 @@
     </div>
     <div class="swiper-container">
         <div class="swiper-wrapper">
-
             {% for page in locationsnearme %}
                 {% include "location_preview.html" with page=page.specific %}
             {% endfor %}
         </div>
     </div>
-
     {% endif %}
-
-
-
 </template>
 
 <template id='desktop-content'>
@@ -92,13 +76,11 @@
             {% endfor %}
             
         </div>
-        <div class="swiper-pagination"></div>
     </div>
 
    {% endif %}
-</template>
 
-    
+</template>
     <script>
 
     var pageContentShown = document.querySelector(".page-content-shown");

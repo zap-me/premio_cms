@@ -4,7 +4,16 @@
 
 @media only screen and (max-width: 844px) {
 
-       
+.caption-banner {
+
+    z-index: 9999;
+    text-align: center;
+    border-radius: 0px 15px 15px 0px;
+    width: 50%;
+    position: relative;
+    bottom: 350px;
+
+}
 	body {
 
             margin: 0;
@@ -176,7 +185,6 @@ flex:0 50%;
 width: 50%;
 
 	}
-
 
 
 
@@ -356,4 +364,5 @@ tag-img {
     width: 50%;
 
 }
+
 

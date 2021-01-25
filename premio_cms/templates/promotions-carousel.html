@@ -1,17 +1,20 @@
 {% load wagtailcore_tags wagtailimages_tags %}
-
+{% with p.promoted_page.specific as promoted_page %}	
     <div class="swiper-slide promo-card">
-        <a href="{% pageurl page %}">
+        <a href="{% pageurl promoted_page %}">
            <div class="card shadow-lg" style="width: 100%;">
-             {% with page.main_image as main_image %}
+             {% with promoted_page.main_image as main_image %}
              {% if main_image %}{% image main_image fill-1000x700-c100 class="card-img-top" %}{% endif %}
              {% endwith %}
              <div class="card-body" style="height: 15vh;">
-               <h5 class="card-title">{{ page.title }}</h5>
-               <a href="{% pageurl page %}" class="btn btn-primary mt-2">Learn more</a>
+               <h5 class="card-title">{{ promoted_page.title }}</h5>
+               <a href="{% pageurl promoted_page %}" class="btn btn-primary mt-2">Learn more</a>
              </div>
            </div>
         </a>
+
+             <div class="bg-primary caption-banner">
+                 <p style="color: white;">{{ p.caption }}</p>
+             </div>
     </div>
-
-
+{% endwith %}
