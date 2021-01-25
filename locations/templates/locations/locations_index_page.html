@@ -87,7 +87,7 @@
         <div class="swiper-wrapper"> 
             {% for i,p in indexed_promoted_pages %}
                 {% with p.promoted_page.specific as promoted_page %}	
-		    {% include "promotions-carousel.html" with page=promoted_page %}
+		    {% include "location_card_desktop.html" with page=promoted_page %}
                 {% endwith %}
             {% endfor %}
             
