@@ -3,9 +3,9 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-
+<div class="page-container">
     {% if request.GET.tag|length %}
-    <div class="mt-2 d-flex justify-content-start align-items-center">
+    <div class="tags-index-back-bar mt-2 d-flex justify-content-start align-items-center">
         <a href="{{ page.get_parent.url }}">
             <img src="https://img.icons8.com/android/96/000000/back.png" width="30px" height="30px"/>
         </a>
@@ -22,4 +22,5 @@
             </div>
         {% endfor %}
     </div>
+</div>
 {% endblock %}
