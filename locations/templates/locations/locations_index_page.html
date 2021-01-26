@@ -66,7 +66,7 @@
 	<!-- replace w/ static file later -->
     </div>
     {% if page.promoted_pages.count %}
-    <div class="swiper-promotions-desktop mt-5">
+    <div class="swiper-promotions-desktop mt-5 ml-4">
 
         <div class="swiper-wrapper"> 
             {% for i,p in indexed_promoted_pages %}
@@ -79,7 +79,20 @@
     </div>
 
    {% endif %}
-
+   {% for tag, pages in locationpagetags.items %}
+       {% if pages.count %}
+       <div class="content-title-holder">
+           <h2 class="ml-4 mt-4">{{ tag | title }}</h2>
+       </div>
+       <div class="swiper-promotions-desktop mt-5 ml-4">
+       	<div class="swiper-wrapper">
+       		{% for child in pages %}
+       			{% include "location_card_desktop.html" with page=child.specific %}
+       		{% endfor %}
+               </div>
+       </div>
+       {% endif %}
+   {% endfor %}
 </template>
     <script>
 
