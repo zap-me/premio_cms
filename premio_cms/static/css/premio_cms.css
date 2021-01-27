@@ -434,3 +434,14 @@ align-items: center;
 
 
 }
+
+.tags-card {
+    width: 25vw;
+}
+
+.desktop-location-nav {
+    width: 100vw;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
