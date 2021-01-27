@@ -445,3 +445,11 @@ align-items: center;
     justify-content: start;
     align-items: center;
 }
+
+.tags-row-wrapped {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+
+}

@@ -35,14 +35,15 @@
                 <h5 class="mt-2 ml-4">{{ request.GET.tag }}</h5>
             </div>
         {% endif %}
-
-        {% for page in locationpages %}
-            {% include "desktop_tags_page_card.html" with page=page.specific %}
-            {% empty %}
-                <div class="col">
-                    No pages found with that tag.
-                </div>
-        {% endfor %}
+        <div class="tags-row-wrapped">
+            {% for page in locationpages %}
+                {% include "desktop_tags_page_card.html" with page=page.specific %}
+                {% empty %}
+                    <div class="col">
+                        No pages found with that tag.
+                    </div>
+            {% endfor %}
+        </div>
     </template>
 </div>
 <script>
