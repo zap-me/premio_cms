@@ -449,7 +449,11 @@ align-items: center;
 .tags-row-wrapped {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
 
+}
+
+.tags-row-wrapped>*{
+    margin: 40px;
 }
