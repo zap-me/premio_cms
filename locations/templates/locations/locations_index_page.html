@@ -59,25 +59,19 @@
 </template>
 
 <template id='desktop-content'>
-
-    
     <div class="content-title-holder">
        <h2 class="ml-4 mt-4">Promotions</h2>
-	<!-- replace w/ static file later -->
     </div>
     {% if page.promoted_pages.count %}
     <div class="swiper-promotions-desktop mt-5 ml-4">
-
         <div class="swiper-wrapper"> 
             {% for i,p in indexed_promoted_pages %}
                 {% with p.promoted_page.specific as promoted_page %}	
 		    {% include "location_card_desktop.html" with page=promoted_page %}
                 {% endwith %}
             {% endfor %}
-            
         </div>
     </div>
-
    {% endif %}
    {% for tag, pages in locationpagetags.items %}
        {% if pages.count %}
@@ -97,13 +91,11 @@
     <script>
 
     var pageContentShown = document.querySelector(".page-content-shown");
-    
     const isMobile = matchMedia('(max-device-width: 844px)').matches;
     if(isMobile === true) {
         var mobileTemplate = document.querySelector("#mobile-content");
         var clone = mobileTemplate.content.cloneNode(true);
         pageContentShown.appendChild(clone);
-        
         var generalSwiper = new Swiper('.swiper-container', {
             slidesPerView: 2,
             spaceBetween: 2,
@@ -146,7 +138,8 @@
         
         });
     } else {
-            
+
+
         var desktopTemplate = document.querySelector("#desktop-content");
         var clone = desktopTemplate.content.cloneNode(true);
         pageContentShown.appendChild(clone);

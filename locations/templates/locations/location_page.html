@@ -6,88 +6,137 @@
 
 {% block content %}
 <div id="page-container">
+    <template id="mobile-content">
+       <a href="{{ page.get_parent.url }}">
+           <div class="premio-back-btn premio-back-btn anm fdr">
+               <img src="https://img.icons8.com/android/96/000000/back.png" width="15px" height="15px"/>
+           </div>
+       </a>
+       <div class="swiper-location-page-images">
+           <div class="swiper-wrapper">
+               {% for item in page.gallery_images.all %}
+                   <div class="swiper-slide">
+                       {% image item.image fill-1000x1000-c100 class="location-page-img" %}
+               	</div>
+               {% endfor %}
+           </div>
+       </div>
 
+       {% if page.lat_long %}
+       <div class="row">
 
-    <a href="{{ page.get_parent.url }}">
-        <div class="premio-back-btn premio-back-btn anm fdr">
-            <img src="https://img.icons8.com/android/96/000000/back.png" width="15px" height="15px"/>
-        </div>
-    </a>
-    <div class="swiper-location-page-images">
-        <div class="swiper-wrapper">
-            {% for item in page.gallery_images.all %}
-                <div class="swiper-slide">
-                    {% image item.image fill-1000x1000-c100 class="location-page-img" %}
-	    	</div>
-            {% endfor %}
-        </div>
-    </div>
+       <div class="row anm fdr" style="width:90vw;">
+           <div class="col">
+               <div class="ml-4">
+                   <h2>{{ page.title }}</h2>
+                   <div class="page-body mt-2 body-font">
+                       {{ page.body|richtext }}
+                   </div>
+               </div>
+           </div>
+       </div>
 
-    {% if page.lat_long %}
-    <div class="row">
+       <div class="placeholder-div"></div>
 
-    <div class="row anm fdr" style="width:90vw;">
-        <div class="col">
-            <div class="ml-4">
-                <h2>{{ page.title }}</h2>
-                <div class="page-body mt-2 body-font">
-                    {{ page.body|richtext }}
-                </div>
-            </div>
-        </div>
-    </div>
+               <div class="card shadow-lg p-3 mx-auto rounded">
+                   <iframe
+                       class="mx-auto d-block"
+                       width="414px" height="150px" frameborder="0" style="border:0"
+                                                                src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18" allowfullscreen>
+                   </iframe>
+               </div>
+       </div>
+      {% endif %}
 
-    <div class="placeholder-div"></div>
+       {% if page.tags.all.count %}
+       <div class="row">
+           <div class="col m-3">
+               <div class="text-center">
+                   <h5>Tags</h5>
+                   {% for tag in page.tags.all %}
+                   <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag }}</a>
+                   {% endfor %}
+               </div>
+           </div>
+       </div>
+       {% endif %}
+    </template>
+    <template id="desktop-content">
+                        <div class="desktop-location-nac mt-3 mb-3">
+                            <a href="{{ page.get_parent.url }}">
+                                <img class="ml-3" src="https://img.icons8.com/android/96/000000/back.png" width="30px" height="30px"/>
+                            </a>
+                        </div>
+                        {% image page.main_image fill-2000x2000-c100 class="desktop-location-page-img" %}
+                        <h1 class="title-caption">{{ page.intro|richtext }}</h1>
+                        <h5 class="title-caption body-caption">{{ page.body|richtext }}</h5>
+                        <iframe
+                            class="mx-auto d-block desktop-mapview mt-5"
+                            width="200px" height="150px" frameborder="0" style="border:0"
+                                                                     src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18" allowfullscreen>
+                        </iframe>
 
-            <div class="card shadow-lg p-3 mx-auto rounded">
-                <iframe
-                    class="mx-auto d-block"
-                    width="414px" height="150px" frameborder="0" style="border:0"
-                                                             src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18" allowfullscreen>
-                </iframe>
-            </div>
-    </div>
-   {% endif %}
-
-    {% if page.tags.all.count %}
-    <div class="row">
-        <div class="col m-3">
-            <div class="text-center">
-                <h5>Tags</h5>
-                {% for tag in page.tags.all %}
-                <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag }}</a>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-
+                        {% if page.tags.all.count %}
+                            <div class="d-flex flex-column justify-content-start align-items-center tags-holder mt-5">
+                                <h5>Tags</h5>
+                                <div class="d-flex flex-row justify-content-around align-items-center tags-row mt-3">
+                                {% for tag in page.tags.all %}
+                                    <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag }}</a>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+    </template>
 </div>
-
 <script>
+    var pageContentShown=document.querySelector("#page-container");
+    const isMobile = matchMedia('(max-device-width: 844px)').matches;
+    if(isMobile === true) {
+        var mobileTemplate = document.querySelector("#mobile-content");
+        var clone = mobileTemplate.content.cloneNode(true);
+        pageContentShown.appendChild(clone);
+        var locationPageImageSwiper = new Swiper('.swiper-location-page-images', {
+            slidesPerView: 1,
+            spaceBetween: 2,
+            effect: 'coverflow',
+            coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            autoplay: {delay: 2},
+            slideShadows: false,
+          },
+            pagination: {
+            
+                el: '.swiper-pagination',
+                clickable: true,
+            }
+        }); 
+    } else {
 
-    var locationPageImageSwiper = new Swiper('.swiper-location-page-images', {
-        slidesPerView: 1,
-        spaceBetween: 2,
-	effect: 'coverflow',
-	coverflowEffect: {
-        rotate: 50,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-	autoplay: {delay: 2},
-        slideShadows: false,
-      },
-        pagination: {
-        
-            el: '.swiper-pagination',
-            clickable: true,
-        }
-
-
-
-    });
+        var desktopTemplate=document.querySelector("#desktop-content");
+        var clone=desktopTemplate.content.cloneNode(true);
+        pageContentShown.appendChild(clone);
+        var locationPageImageSwiper = new Swiper('.swiper-location-page-images', {
+            slidesPerView: 1,
+            spaceBetween: 2,
+            effect: 'coverflow',
+            coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            autoplay: {delay: 2},
+            slideShadows: false,
+          },
+            pagination: {
+            
+                el: '.swiper-pagination',
+                clickable: true,
+            }
+        }); 
+    }
 </script>
 {% endblock %}
 
