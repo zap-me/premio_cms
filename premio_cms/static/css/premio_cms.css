@@ -8,6 +8,35 @@ width:50%;
 position:relative;
 bottom:280px
 }
+.promotions-holder {
+position: relative;
+top: -85px;
+}
+.locations-index-pg-bottom {
+position: relative;
+top: -75px;
+}
+.item-container-holder {
+position:relative;
+top: -80px;
+}
+a {
+font-family: 'Spartan', sans-serif;
+}
+
+.top-svg {
+position:relative;
+z-index:100000;
+top: -110px;
+}
+.top-svg-tags {
+top:-92px;
+}
+.bottom-svg {
+position:relative;
+top: 2.5px;
+}
+
 
 body {
 margin:0;
