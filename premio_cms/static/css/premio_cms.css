@@ -1,5 +1,4 @@
-@import "https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;600&display=swap";
-
+@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@300;600&display=swap');
 @media only screen and (max-width: 844px) {
 .caption-banner {
 z-index:9999;
@@ -209,7 +208,7 @@ background-color:#dbdbdb
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-top:4px
+margin-top: -35px;
 }
 
 .a-color,.a-color:hover {
@@ -374,4 +373,8 @@ box-shadow:0 2px 8px 0 rgba(31,38,135,0.37);
 backdrop-filter:blur(1.0px);
 -webkit-backdrop-filter:blur(1.0px);
 border-radius:10px
+}
+
+h1,h2,h3,h4,h5,h6,p {
+font-family: 'Spartan', sans-serif;
 }
