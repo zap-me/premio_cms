@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags %}
         <a href="{% pageurl page %}"> 
             {% with page.main_image as main_image %}
-            {% if main_image %}{% image main_image fill-144x144-c100 class="tag-img rounded-corners" %}{% endif %}
+            {% if main_image %}{% image main_image fill-600x600-c100 class="tag-img rounded-corners" %}{% endif %}
             {% endwith %}
         </a>
