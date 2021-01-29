@@ -5,7 +5,7 @@
     <template id="mobile-content">
         <div class="page-container">
             {% if request.GET.tag|length %}
-            <div class="tags-index-back-bar mt-2 d-flex justify-content-start align-items-center">
+            <div class="tags-index-back-bar mt-2 d-flex justify-content-start align-items-center anm fdu">
                 <a href="{{ page.get_parent.url }}">
                     <img src="https://img.icons8.com/android/96/000000/back.png" width="30px" height="30px"/>
                 </a>
@@ -13,7 +13,7 @@
             </div>
             {% endif %}
 
-            <div class="mt-5 index-pg-content">
+            <div class="mt-5 index-pg-content anm fdu">
                 {% for page in locationpages %}
                     {% include "tags_page_item.html" with page=page.specific %}
                 {% empty %}
