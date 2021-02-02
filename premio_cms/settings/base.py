@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'home',
     'search',
     'wagtail.contrib.forms',
+    'wagtail.contrib.settings',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
     'wagtail.sites',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'wagtail_lazyimages', 
     # ours
     'locations',
+    'wagtail_color_panel'
 ]
 
 MIDDLEWARE = [
@@ -61,8 +63,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+
 ]
 
 ROOT_URLCONF = 'premio_cms.urls'
