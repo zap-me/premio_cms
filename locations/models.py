@@ -1,9 +1,7 @@
 from django.db import models
-
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import Tag, TaggedItemBase
-
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
@@ -11,6 +9,8 @@ from wagtail.admin.edit_handlers import PageChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
+from wagtail_color_panel.fields import ColorField
+from wagtail_color_panel.edit_handlers import NativeColorPanel
 
 def geo_coords_dist(lat1, lon1, lat2, lon2):
     from math import sin, cos, sqrt, atan2, radians
@@ -50,7 +50,7 @@ class LocationsIndexPage(Page):
     max_dist_km = models.IntegerField(default=50, verbose_name='maximum distance (km)')
     promoted_pages_title = models.CharField(blank=True, max_length=250, verbose_name='Promoted Locations Title')
     promoted_pages_intro = RichTextField(blank=True, verbose_name='Promoted Locations Intro')
-
+    page_theme_color=ColorField(default="#007bf")
     def get_context(self, request):
         context = super().get_context(request)
         # promoted pages
@@ -90,6 +90,7 @@ class LocationsIndexPage(Page):
             FieldPanel('show_near_me'),
             FieldPanel('max_dist_km'),
         ], heading='Locations near me'),
+        NativeColorPanel('page_theme_color')
     ]
 
 class LocationsIndexPromotedPage(Orderable):
@@ -117,7 +118,6 @@ class LocationPage(Page):
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=LocationPageTag, blank=True)
     lat_long = models.CharField(blank=True, max_length=30, verbose_name='Latitude, longitude')
-
     def main_image(self):
         gallery_item = self.gallery_images.first()
         if gallery_item:

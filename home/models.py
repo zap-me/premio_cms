@@ -7,11 +7,5 @@ from wagtail_color_panel.edit_handlers import NativeColorPanel
 class HomePage(Page):
     pass
 
-@register_setting
-class ThemeColorSettings(BaseSetting):
-    theme_color=ColorField()
-    panels=[
-        NativeColorPanel('theme_color')
-    ]
 
 
