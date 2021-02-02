@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags lazyimages_tags %}
 
 {% block body_class %}template-locationpage{% endblock %}
 
@@ -16,15 +16,13 @@
            <div class="swiper-wrapper">
                {% for item in page.gallery_images.all %}
                    <div class="swiper-slide">
-                       {% image item.image fill-600x600-c100 class="location-page-img" %}
+                       {% lazy_image item.image fill-600x600-c100 class="location-page-img lazy" %}
                	</div>
                {% endfor %}
            </div>
        </div>
-
        {% if page.lat_long %}
        <div class="row">
-
        <div class="row anm fdr" style="width:90vw;">
            <div class="col">
                <div class="ml-4">
@@ -35,9 +33,7 @@
                </div>
            </div>
        </div>
-
        <div class="placeholder-div"></div>
-
                <div class="card shadow-lg p-3 mx-auto rounded">
                    <iframe
                        class="mx-auto d-block"
@@ -47,7 +43,6 @@
                </div>
        </div>
       {% endif %}
-
        {% if page.tags.all.count %}
        <div class="row">
            <div class="col m-3">
@@ -67,7 +62,7 @@
                                 <img class="ml-3" src="https://img.icons8.com/android/96/000000/back.png" width="30px" height="30px"/>
                             </a>
                         </div>
-                        {% image page.main_image fill-2000x2000-c100 class="desktop-location-page-img" %}
+                        {% lazy_image page.main_image fill-2000x2000-c100 class="desktop-location-page-img lazy" %}
                         <h1 class="title-caption">{{ page.intro|richtext }}</h1>
                         <h5 class="title-caption body-caption">{{ page.body|richtext }}</h5>
                         <iframe
@@ -137,6 +132,8 @@
             }
         }); 
     }
+    const observer = lozad(".lazy");
+    observer.observe();
 </script>
 {% endblock %}
 
