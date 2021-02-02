@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     # third party
     'pwa',
+    'wagtail_lazyimages', 
     # ours
     'locations',
 ]
