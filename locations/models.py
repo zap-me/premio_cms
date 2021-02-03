@@ -14,23 +14,17 @@ from wagtail_color_panel.edit_handlers import NativeColorPanel
 
 def geo_coords_dist(lat1, lon1, lat2, lon2):
     from math import sin, cos, sqrt, atan2, radians
-
     # approximate radius of earth in km
     R = 6373.0
-
     lat1 = radians(lat1)
     lon1 = radians(lon1)
     lat2 = radians(lat2)
     lon2 = radians(lon2)
-
     dlon = lon2 - lon1
     dlat = lat2 - lat1
-
     a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
     distance = R * c
-
     return distance
 
 def str2latlon(s):
@@ -51,6 +45,8 @@ class LocationsIndexPage(Page):
     promoted_pages_title = models.CharField(blank=True, max_length=250, verbose_name='Promoted Locations Title')
     promoted_pages_intro = RichTextField(blank=True, verbose_name='Promoted Locations Intro')
     page_theme_color=ColorField(default="#007bf")
+    primary_font_url=models.CharField(max_length=250,verbose_name="Primary Font URL",default="https://fonts.googleapis.com/css2?family=Spartan:wght@300;600&display=swap")
+    primary_font_family=models.CharField(max_length=250,verbose_name="Primary Font Family",default="font-family: 'Spartan', sans-serif;")
     def get_context(self, request):
         context = super().get_context(request)
         # promoted pages
@@ -61,7 +57,7 @@ class LocationsIndexPage(Page):
         context['indexed_promoted_pages'] = indexed_promoted_pages
         # tags
         tags = {}
-        for tag in  Tag.objects.all():
+        for tag in Tag.objects.all():
             tags[tag] =  LocationPage.objects.filter(tags__name=tag).live()
         context['locationpagetags'] = tags
         # locations near me
@@ -85,6 +81,8 @@ class LocationsIndexPage(Page):
             InlinePanel('promoted_pages', label="Promoted Locations"),
             FieldPanel('promoted_pages_title', classname="full"),
             FieldPanel('promoted_pages_intro', classname="full"),
+            FieldPanel('primary_font_url'),
+            FieldPanel('primary_font_family') 
         ], heading='Promote'),
         MultiFieldPanel([
             FieldPanel('show_near_me'),
@@ -154,13 +152,10 @@ class LocationPageGalleryImage(Orderable):
     ]
 
 class LocationTagIndexPage(Page):
-
     def get_context(self, request):
-
         # Filter by tag
         tag = request.GET.get('tag')
         locationpages = LocationPage.objects.filter(tags__name=tag).live()
-
         # Update template context
         context = super().get_context(request)
         context['locationpages'] = locationpages
