@@ -9,6 +9,7 @@
 @import url({{ page.primary_font_url }}); 
 a,p,h1,h2,h3,h4,h5,h6 {
 {{ page.primary_font_family|richtext }}
+color: {{ page.primary_font_color }}
 }
 .color-fluid {
 background-color:{{ page.page_theme_color }};
@@ -25,6 +26,12 @@ color: white;
 }
 .caption-banner {
 background-color:{{ page.page_theme_color }};
+}
+body{
+background-color:{{ page.page_background_color }};
+}
+.card-color{
+background-color:{{ page.content_card_color }};
 }
 </style>
 

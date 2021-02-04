@@ -6,7 +6,7 @@
              {% with promoted_page.main_image as main_image %}
              {% if main_image %}{% lazy_image main_image fill-748x380-c100 class="card-img-top lazy" %}{% endif %}
              {% endwith %}
-             <div class="card-body" style="height: 15vh;">
+             <div class="card-body card-color" style="height: 15vh;">
                <h5 class="card-title">{{ promoted_page.title }}</h5>
                <button class="color-fluid"><a href="{% pageurl promoted_page %}" class="mt-2">Learn more</a></button>
              </div>
