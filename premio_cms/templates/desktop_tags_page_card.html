@@ -1,5 +1,5 @@
 {% load wagtailcore_tags wagtailimages_tags lazyimages_tags %}
-    <div class="card tags-card glass-body" data-tilt data-tilt-scale="1.02" data-tilt-glare data-tilt-max-glare="0.2">
+    <div class="card tags-card glass-body">
         <a href="{% pageurl page %}">
             {% with page.main_image as main_image %}
             {% if main_image %}{% lazy_image main_image fill-500x250-c100 class="card-img-top lazy" %}{% endif %}
