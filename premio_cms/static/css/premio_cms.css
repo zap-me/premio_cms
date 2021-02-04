@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Spartan:wght@300;600&display=swap');
+.no-overflow{
+overflow-x: hidden;
+}
 @media only screen and (max-width: 844px) {
 .caption-banner {
 z-index:9999;
