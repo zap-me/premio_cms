@@ -164,76 +164,71 @@ background-color:{{ page.content_card_color }};
 </template>
     <script>
 
-    var pageContentShown = document.querySelector(".page-content-shown");
-    const isMobile = matchMedia('(max-device-width: 844px)').matches;
-    if(isMobile === true) {
-        var mobileTemplate = document.querySelector("#mobile-content");
-        var clone = mobileTemplate.content.cloneNode(true);
-        pageContentShown.appendChild(clone);
-        var generalSwiper = new Swiper('.swiper-container', {
-            slidesPerView: 2,
-            spaceBetween: 2,
-            centerInsufficientSlides: true,
-            loop: true,
-            effect: 'coverflow',
-            coverflowEffect: {
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: false,
-          },
-            pagination: {
-            
-                el: '.swiper-pagination',
-                clickable: true,
-            }
-        });
-        
-        var promotionsSwiper = new Swiper('.swiper-promotions-container', {
-            slidesPerView: 1,
-            spaceBetween: 2,
-            effect: 'coverflow',
-            coverflowEffect: {
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            autoplay: {delay: 2},
-            slideShadows: false,
-          },
-            pagination: {
-            
-                el: '.swiper-pagination',
-                clickable: true,
-            }
-        });
-    } else {
-        var desktopTemplate = document.querySelector("#desktop-content");
-        var clone = desktopTemplate.content.cloneNode(true);
-        pageContentShown.appendChild(clone);
-        /*
-        var generalSwiper = new Swiper('.swiper-container', {
-            slidesPerView: 4,
-            spaceBetween: 5,
-            centerInsufficientSlides: true,
-            pagination: {
-            
-                el: '.swiper-pagination',
-                clickable: true,
-            }
-        });
-        */ 
-       var promotionsSwiper = new Swiper('.swiper-promotions-desktop', {
-          slidesPerView: 3,
-          slidesPerColumn: 1,
-          spaceBetween: 15,
-          pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-          },
-        }); 
-    }
+        var devicePortrait=true;
+	var pageContentShown = document.querySelector(".page-content-shown");
+        function setUpContent() {
+	    const isMobile =( matchMedia('(max-device-width: 844px)').matches && matchMedia( "(orientation: portrait)").matches);
+	    if(isMobile === true) {
+		var mobileTemplate = document.querySelector("#mobile-content");
+		var clone = mobileTemplate.content.cloneNode(true);
+		pageContentShown.appendChild(clone);
+		var generalSwiper = new Swiper('.swiper-container', {
+		    slidesPerView: 2,
+		    spaceBetween: 2,
+		    centerInsufficientSlides: true,
+		    loop: true,
+		    effect: 'coverflow',
+		    coverflowEffect: {
+		    rotate: 50,
+		    stretch: 0,
+		    depth: 100,
+		    modifier: 1,
+		    slideShadows: false,
+		  },
+		    pagination: {
+		    
+			el: '.swiper-pagination',
+			clickable: true,
+		    }
+		});
+		var promotionsSwiper = new Swiper('.swiper-promotions-container', {
+		    slidesPerView: 1,
+		    spaceBetween: 2,
+		    effect: 'coverflow',
+		    coverflowEffect: {
+		    rotate: 50,
+		    stretch: 0,
+		    depth: 100,
+		    modifier: 1,
+		    autoplay: {delay: 2},
+		    slideShadows: false,
+		  },
+		    pagination: {
+		    
+			el: '.swiper-pagination',
+			clickable: true,
+		    }
+		});
+	    } else {
+		var desktopTemplate = document.querySelector("#desktop-content");
+		var clone = desktopTemplate.content.cloneNode(true);
+		pageContentShown.appendChild(clone);
+	       var promotionsSwiper = new Swiper('.swiper-promotions-desktop', {
+		  slidesPerView: 3,
+		  slidesPerColumn: 1,
+		  spaceBetween: 15,
+		  pagination: {
+		    el: '.swiper-pagination',
+		    clickable: true,
+		  },
+		}); 
+	    }
+                const observer=lozad(".lazy");
+                observer.observe();
+        }
+        //sets up page content
+        setUpContent(); 
+
         function setCookie(name, value, seconds) {
             var expires = "";
             if (seconds) {
@@ -280,8 +275,76 @@ background-color:{{ page.content_card_color }};
             }
         }
 
-        const observer=lozad(".lazy");
-        observer.observe();
+        window.addEventListener("orientationchange", function() {
+            while (pageContentShown.firstChild) {
+                pageContentShown.removeChild(pageContentShown.firstChild);
+            }
+                devicePortrait = !devicePortrait;
+                if(!devicePortrait) {
+                    console.log("landscape");
+			var desktopTemplate = document.querySelector("#desktop-content");
+			var clone = desktopTemplate.content.cloneNode(true);
+			pageContentShown.appendChild(clone);
+		       var promotionsSwiper = new Swiper('.swiper-promotions-desktop', {
+			  slidesPerView: 3,
+			  slidesPerColumn: 1,
+			  spaceBetween: 15,
+			  pagination: {
+			    el: '.swiper-pagination',
+			    clickable: true,
+			  },
+			}); 
+                } else {
+
+                    document.getElementById("parent-container").style="overflow-x: hidden;";
+		        var mobileTemplate = document.querySelector("#mobile-content");
+			var clone = mobileTemplate.content.cloneNode(true);
+			pageContentShown.appendChild(clone);
+			var generalSwiper = new Swiper('.swiper-container', {
+			    slidesPerView: 2,
+			    spaceBetween: 2,
+			    centerInsufficientSlides: true,
+			    loop: true,
+			    effect: 'coverflow',
+			    coverflowEffect: {
+			    rotate: 50,
+			    stretch: 0,
+			    depth: 100,
+			    modifier: 1,
+			    slideShadows: false,
+			  },
+			    pagination: {
+			    
+				el: '.swiper-pagination',
+				clickable: true,
+			    }
+			});
+			var promotionsSwiper = new Swiper('.swiper-promotions-container', {
+			    slidesPerView: 1,
+			    spaceBetween: 2,
+			    effect: 'coverflow',
+			    coverflowEffect: {
+			    rotate: 50,
+			    stretch: 0,
+			    depth: 100,
+			    modifier: 1,
+			    autoplay: {delay: 2},
+			    slideShadows: false,
+			  },
+			    pagination: {
+			    
+				el: '.swiper-pagination',
+				clickable: true,
+			    }
+			});
+                    console.log("portrait");
+               }
+
+            const observer=lozad(".lazy");
+            observer.observe();
+            console.log("device rotated!!!!!!!!");
+        }, false);
+       
     </script>
 
 {% endblock %}
