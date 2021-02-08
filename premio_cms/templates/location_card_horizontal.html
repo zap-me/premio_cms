@@ -6,11 +6,10 @@
                 {% if main_image %}{% lazy_image main_image fill-500x250-c100 class="card-img-top lazy" %}{% endif %}
                 {% endwith %}
             </a>
-             <div class="card-body card-color" style="height: 15vh;">
-               <h5 class="card-title">{{ page.title }}</h5>
+             <div class="card-body card-color" style="height: 25vh;">
+               <h6 class="card-title">{{ page.title }}</h6>
               <button class="color-fluid" ><a href="{% pageurl page %}" class="mt-1 white-text">Learn more</a></button> 
              </div>
         </div>
     </div>
-
 

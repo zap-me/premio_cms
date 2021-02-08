@@ -2,8 +2,11 @@
 .no-overflow{
 margin: 0;
 width: 100vw;
+overflow-x: hidden;
 }
-
+.horizontal {
+margin-top: 130px;
+}
 @media only screen and (max-width: 844px) {
 .caption-banner {
 z-index:9999;
@@ -423,3 +426,4 @@ position:relative;
 z-index:100000;
 top: -270px;
 }
+
