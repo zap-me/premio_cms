@@ -2,7 +2,7 @@
 {% load wagtailcore_tags wagtailimages_tags lazyimages_tags %}
 {% block body_class %}template-locationpage{% endblock %}
 {% block content %}
-<div id="page-container">
+<div id="page-container" style="width: 100%">
     <template id="mobile-content">
        <a href="{{ page.get_parent.url }}">
            <div class="premio-back-btn premio-back-btn anm fdr">
@@ -31,10 +31,10 @@
            </div>
        </div>
        <div class="placeholder-div"></div>
-               <div class="card shadow-lg p-3 mx-auto rounded">
+               <div class="card shadow-lg p-3 mx-auto rounded" style="width: 100vw;">
                    <iframe
                        class="mx-auto d-block"
-                       width="414px" height="150px" frameborder="0" style="border:0"
+                       width="100%" height="150px" frameborder="0" style="border:0"
                                                                 src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18" allowfullscreen>
                    </iframe>
                </div>

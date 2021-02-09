@@ -212,53 +212,75 @@ background-color:{{ page.content_card_color }};
         </div>
 </template>
     <script>
-
-        var devicePortrait=true;
+        var currentDeviceRotation;
+        var devicePortrait;
 	var pageContentShown = document.querySelector(".page-content-shown");
         function setUpContent() {
-	    const isMobile =( matchMedia('(max-device-width: 844px)').matches && matchMedia( "(orientation: portrait)").matches);
+	    const isMobile =( matchMedia('(max-device-width: 844px)').matches);
 	    if(isMobile === true) {
-		var mobileTemplate = document.querySelector("#mobile-content");
-		var clone = mobileTemplate.content.cloneNode(true);
-		pageContentShown.appendChild(clone);
-		var generalSwiper = new Swiper('.swiper-container', {
-		    slidesPerView: 2,
-		    spaceBetween: 2,
-		    centerInsufficientSlides: true,
-		    loop: true,
-		    effect: 'coverflow',
-		    coverflowEffect: {
-		    rotate: 50,
-		    stretch: 0,
-		    depth: 100,
-		    modifier: 1,
-		    slideShadows: false,
-		  },
-		    pagination: {
-		    
-			el: '.swiper-pagination',
-			clickable: true,
-		    }
-		});
-		var promotionsSwiper = new Swiper('.swiper-promotions-container', {
-		    slidesPerView: 1,
-		    spaceBetween: 2,
-		    effect: 'coverflow',
-		    coverflowEffect: {
-		    rotate: 50,
-		    stretch: 0,
-		    depth: 100,
-		    modifier: 1,
-		    autoplay: {delay: 2},
-		    slideShadows: false,
-		  },
-		    pagination: {
-		    
-			el: '.swiper-pagination',
-			clickable: true,
-		    }
-		});
+                if(matchMedia( "(orientation: portrait)").matches) {
+                        devicePortrait=true;
+			var mobileTemplate = document.querySelector("#mobile-content");
+			var clone = mobileTemplate.content.cloneNode(true);
+			pageContentShown.appendChild(clone);
+			var generalSwiper = new Swiper('.swiper-container', {
+			    slidesPerView: 2,
+			    spaceBetween: 2,
+			    centerInsufficientSlides: true,
+			    loop: true,
+			    effect: 'coverflow',
+			    coverflowEffect: {
+			    rotate: 50,
+			    stretch: 0,
+			    depth: 100,
+			    modifier: 1,
+			    slideShadows: false,
+			  },
+			    pagination: {
+			    
+				el: '.swiper-pagination',
+				clickable: true,
+			    }
+			});
+			var promotionsSwiper = new Swiper('.swiper-promotions-container', {
+			    slidesPerView: 1,
+			    spaceBetween: 2,
+			    effect: 'coverflow',
+			    coverflowEffect: {
+			    rotate: 50,
+			    stretch: 0,
+			    depth: 100,
+			    modifier: 1,
+			    autoplay: {delay: 2},
+			    slideShadows: false,
+			  },
+			    pagination: {
+			    
+				el: '.swiper-pagination',
+				clickable: true,
+			    }
+			});
+
+               } else {
+
+                        devicePortrait=false;
+			var desktopTemplate = document.querySelector("#mobile-horizontal-content");
+			var clone = desktopTemplate.content.cloneNode(true);
+			pageContentShown.appendChild(clone);
+		       var promotionsSwiper = new Swiper('.swiper-promotions-desktop', {
+			  slidesPerView: 3,
+			  slidesPerColumn: 1,
+			  spaceBetween: 15,
+			  pagination: {
+			    el: '.swiper-pagination',
+			    clickable: true,
+			  },
+			}); 
+
+               }
 	    } else {
+
+                devicePortrait=false;
 		var desktopTemplate = document.querySelector("#desktop-content");
 		var clone = desktopTemplate.content.cloneNode(true);
 		pageContentShown.appendChild(clone);
