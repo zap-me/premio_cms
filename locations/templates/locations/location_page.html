@@ -2,7 +2,15 @@
 {% load wagtailcore_tags wagtailimages_tags lazyimages_tags %}
 {% block body_class %}template-locationpage{% endblock %}
 {% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
 <div id="page-container" style="width: 100%">
+<style>
+.map {
+height: 150px;
+width: 100%;
+}
+</style>
     <template id="mobile-content">
        <a href="{{ page.get_parent.url }}">
            <div class="premio-back-btn premio-back-btn anm fdr">
@@ -31,12 +39,8 @@
            </div>
        </div>
        <div class="placeholder-div"></div>
-               <div class="card shadow-lg p-3 mx-auto rounded" style="width: 100vw;">
-                   <iframe
-                       class="mx-auto d-block"
-                       width="100%" height="150px" frameborder="0" style="border:0"
-                                                                src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18" allowfullscreen>
-                   </iframe>
+               <div class="shadow-lg mx-auto rounded" style="width: 100vw;">
+               <div class="map" id="map"></div>
                </div>
        </div>
       {% endif %}
@@ -81,6 +85,8 @@
     </template>
 </div>
 <script>
+    var latLong = [{{page.specific.lat_long}}];
+    var longLat = [latLong[1],latLong[0]];
     var pageContentShown=document.querySelector("#page-container");
     const isMobile = matchMedia('(max-device-width: 844px)').matches;
     if(isMobile === true) {
@@ -131,6 +137,28 @@
     }
     const observer = lozad(".lazy");
     observer.observe();
+          var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat(longLat),
+          zoom: 18
+        })
+      });
+ var layer = new ol.layer.Vector({
+     source: new ol.source.Vector({
+         features: [
+             new ol.Feature({
+                 geometry: new ol.geom.Point(ol.proj.fromLonLat(longLat))
+             })
+         ]
+     })
+ });
+map.addLayer(layer);
 </script>
 {% endblock %}
 
