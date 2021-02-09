@@ -5,13 +5,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
 <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
 <div id="page-container" style="width: 100%">
+    <template id="mobile-content">
+
 <style>
 .map {
 height: 150px;
 width: 100%;
 }
 </style>
-    <template id="mobile-content">
        <a href="{{ page.get_parent.url }}">
            <div class="premio-back-btn premio-back-btn anm fdr">
                <img src="https://img.icons8.com/android/96/000000/back.png" width="15px" height="15px"/>
@@ -43,11 +44,14 @@ width: 100%;
                <div class="map" id="map"></div>
                </div>
        </div>
-      {% endif %}
+       <div class="mt-5 text-center">
+<a href="https://www.google.com/maps/@{{page.specific.lat_long}},18z"><button type="button" class="btn btn-outline-primary">Open in Google Maps</button></a>
+      </div>      
+       {% endif %}
        {% if page.tags.all.count %}
        <div class="row">
            <div class="col m-3">
-               <div class="text-center">
+               <div class="text-center mt-3">
                    <h5>Tags</h5>
                    {% for tag in page.tags.all %}
                    <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag }}</a>
@@ -58,6 +62,14 @@ width: 100%;
        {% endif %}
     </template>
     <template id="desktop-content">
+
+	<style>
+	.map {
+	height: 300px;
+	width: 100%;
+	}
+	</style>
+
                         <div class="mt-3 mb-3">
                             <a href="{{ page.get_parent.url }}">
                                 <img class="ml-3" src="https://img.icons8.com/android/96/000000/back.png" width="30px" height="30px"/>
@@ -66,12 +78,10 @@ width: 100%;
                         {% lazy_image page.main_image fill-2000x2000-c100 class="desktop-location-page-img lazy" %}
                         <h1 class="title-caption">{{ page.intro|richtext }}</h1>
                         <h5 class="title-caption body-caption">{{ page.body|richtext }}</h5>
-                        <iframe
-                            class="mx-auto d-block desktop-mapview mt-5"
-                            width="200px" height="150px" frameborder="0" style="border:0"
-                                                                     src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18" allowfullscreen>
-                        </iframe>
 
+		        <div class="shadow-lg mx-auto rounded" style="width: 100vw;">
+		        <div class="map" id="map"></div>
+		        </div>
                         {% if page.tags.all.count %}
                             <div class="d-flex flex-column justify-content-start align-items-center tags-holder mt-5">
                                 <h5>Tags</h5>

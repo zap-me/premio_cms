@@ -414,7 +414,8 @@ font-family: 'Spartan', sans-serif;
 
 .desktop-locations-holder {
 position: relative;
-top: -380px;
+top: -550px;
+z-index: 999999999999999999999999999999999999;
 }
 a {
 font-family: 'Spartan', sans-serif;
