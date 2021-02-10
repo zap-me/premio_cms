@@ -12,69 +12,69 @@
     <div class="intro">{{ page.intro|richtext }}</div>
 
     {% if page.promoted_pages.count %}
-    {% if page.promoted_pages_title %}
-    <div>
-        <h2 class="text-center mt-5">{{ page.promoted_pages_title }}</h2>
-        {% if page.promoted_pages_intro %}
-            <div class="intro">{{ page.promoted_pages_intro|richtext }}</div>
-        {% endif %}
-    </div>
-    {% endif %}
-    <div id="promotedCarousel" class="carousel slide bg-secondary" data-ride="carousel">
-        {% if indexed_promoted_pages|length <= 8 %}
-        <ol class="carousel-indicators">
-            {% for i,p in indexed_promoted_pages %}
-            <li data-target="#promotedCarousel" data-slide-to="{{i}}" {% if i == 0 %}class="active"{% endif %}></li>
-            {% endfor %}
-        </ol>
-        {% endif %}
-        <div class="carousel-inner">
-            {% for i,p in indexed_promoted_pages %}
-            <div class="carousel-item {% if i == 0 %}active{% endif %}">
-                {% with p.promoted_page.specific as promoted_page %}
-                {% with promoted_page.main_image as main_image %}
-                    {% if main_image %}{% image main_image fill-300x150 class="mx-auto d-block" %}{% endif %}
-                {% endwith %}
-                {% endwith %}
-                <div class="carousel-caption d-none d-md-block">
-                    {% if p.caption %}
-                    <h5>{{ p.caption }}</h5>
-                    {% else %}
-                    <h5>{{ p.promoted_page.title }}</h5>
-                    {% endif %}
-                </div>
+        {% if page.promoted_pages_title %}
+            <div>
+                <h2 class="text-center mt-5">{{ page.promoted_pages_title }}</h2>
+                {% if page.promoted_pages_intro %}
+                    <div class="intro">{{ page.promoted_pages_intro|richtext }}</div>
+                {% endif %}
             </div>
-            {% endfor %}
+        {% endif %}
+        <div id="promotedCarousel" class="carousel slide bg-secondary" data-ride="carousel">
+            {% if indexed_promoted_pages|length <= 8 %}
+                <ol class="carousel-indicators">
+                    {% for i,p in indexed_promoted_pages %}
+                        <li data-target="#promotedCarousel" data-slide-to="{{i}}" {% if i == 0 %}class="active"{% endif %}></li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+            <div class="carousel-inner">
+                {% for i,p in indexed_promoted_pages %}
+                    <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                        {% with p.promoted_page.specific as promoted_page %}
+                            {% with promoted_page.main_image as main_image %}
+                                {% if main_image %}{% image main_image fill-300x150 class="mx-auto d-block" %}{% endif %}
+                            {% endwith %}
+                        {% endwith %}
+                        <div class="carousel-caption d-none d-md-block">
+                            {% if p.caption %}
+                                <h5>{{ p.caption }}</h5>
+                            {% else %}
+                                <h5>{{ p.promoted_page.title }}</h5>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#promotedCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#promotedCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-        <a class="carousel-control-prev" href="#promotedCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#promotedCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
     {% endif %}
 
     {% for tag, pages in locationpagetags.items %}
         {% if pages.count %}
-        <a href="{% slugurl 'tags' %}?tag={{ tag }}"><h2 class="text-center mt-5">{{ tag | title }}</h2></a>
-        <div class="row">
-            {% for child in pages %}
-                {% include "location_preview.html" with page=child.specific %}
-            {% endfor %}
-        </div>
+            <a href="{% slugurl 'tags' %}?tag={{ tag }}"><h2 class="text-center mt-5">{{ tag | title }}</h2></a>
+            <div class="row">
+                {% for child in pages %}
+                    {% include "location_preview.html" with page=child.specific %}
+                {% endfor %}
+            </div>
         {% endif %}
     {% endfor %}
 
     {% if locationsnearme %}
-    <h2 class="text-center mt-5">Locations Near Me</h2>
-    {% for page in locationsnearme %}
-        <div class="row">
-            {% include "location_preview.html" with page=page.specific %}
-        </div>
-    {% endfor %}
+        <h2 class="text-center mt-5">Locations Near Me</h2>
+        {% for page in locationsnearme %}
+            <div class="row">
+                {% include "location_preview.html" with page=page.specific %}
+            </div>
+        {% endfor %}
     {% endif %}
     
     <script>
