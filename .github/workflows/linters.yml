@@ -27,7 +27,7 @@ jobs:
     - name: Install curlylint
       run: pip3 install curlylint
     - name: Run curlylint
-      run: "curlylint --parse-only --verbose --rule 'indent: 4' $GITHUB_WORKSPACE/"
+      run: "curlylint --verbose --rule 'indent: 4' $GITHUB_WORKSPACE/"
      
   prettier:
     runs-on: ubuntu-latest
