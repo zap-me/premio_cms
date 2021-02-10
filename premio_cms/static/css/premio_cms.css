@@ -429,3 +429,7 @@ top: -270px;
 .container {
 max-width: 100vw;
 }
+.desktop-page-description {
+width: 30vw;
+margin: auto;
+}

@@ -76,11 +76,12 @@ width: 100%;
                             </a>
                         </div>
                         {% lazy_image page.main_image fill-2000x2000-c100 class="desktop-location-page-img lazy" %}
-                        <h1 class="title-caption">{{ page.intro|richtext }}</h1>
-                        <h5 class="title-caption body-caption">{{ page.body|richtext }}</h5>
 
+                        <h1 class="text-center mt-5">{{ page.title|richtext }}</h1>
+                        <h4 class="text-center mt-5">{{ page.intro|richtext}}</h3>
+                        <div class="mt-5 desktop-page-description text-center"><h5>{{ page.body|richtext }}</h5></div>
 		        <div class="shadow-lg mx-auto rounded" style="width: 100vw;">
-		        <div class="map" id="map"></div>
+		        <div class="mt-5 map" id="map"></div>
 		        </div>
                         {% if page.tags.all.count %}
                             <div class="d-flex flex-column justify-content-start align-items-center tags-holder mt-5">
