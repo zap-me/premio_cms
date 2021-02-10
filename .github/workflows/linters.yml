@@ -42,7 +42,7 @@ jobs:
     - name: Prettify code
       uses: creyD/prettier_action@v3.3
       with:
-        prettier_options: --write **/*.{css,js,md}
+        prettier_options: --write **/*.{css,js,md} --tab-width 4
         dry: True
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
