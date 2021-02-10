@@ -1,4 +1,4 @@
-name: Prettier Linter
+name: Linters
 
 # This action works with pull requests and pushes
 on:
@@ -6,7 +6,6 @@ on:
   push:
     branches:
     - master
-    - ci-linters 
 
 jobs:
   prettier:
@@ -18,12 +17,21 @@ jobs:
       with:
         # Make sure the actual branch is checked out when running on pull requests
         ref: ${{ github.head_ref }}
-
+        
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+        
     - name: Prettify code
       uses: creyD/prettier_action@v3.1
       with:
-        prettier_options: --write **/*.{html,css,js,md}
-        only_changed: True
+        prettier_options: --write **/*.{css,js,md}
         dry: True
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Install curlylint
+      run: pip3 install curlylint
+    - name: Run curlylint
+      run: curlylint --parse-only $GITHUB_WORKSPACE/
