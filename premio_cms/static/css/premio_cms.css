@@ -15,6 +15,9 @@ overflow-x: hidden;
 .horizontal {
 margin-top: 130px;
 }
+.mobile-address-view {
+font-size: 15px;
+}
 @media only screen and (max-width: 844px) {
 .caption-banner {
 z-index:9999;
@@ -262,7 +265,7 @@ object-fit:cover
 
 .body-font {
 color:#656565;
-font-size:14px
+font-size:12px
 }
 
 .premio-back-btn {

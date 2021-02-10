@@ -131,6 +131,7 @@ class LocationPage(Page):
     fri_hours=models.CharField(blank=True,max_length=100)
     sat_hours=models.CharField(blank=True,max_length=100)
     sun_hours=models.CharField(blank=True,max_length=100)
+    address=models.CharField(default="auckland",blank=False,max_length=250)
     def main_image(self):
         gallery_item = self.gallery_images.first()
         if gallery_item:
@@ -148,6 +149,7 @@ class LocationPage(Page):
             FieldPanel('date'),
             FieldPanel('tags'),
             FieldPanel('lat_long', heading='this seems to be ignored in favor of the field "name" or "verbose_name"'),
+            FieldPanel('address')
         ], heading="Location information"),
         FieldPanel('intro'),
         FieldPanel('body'),
