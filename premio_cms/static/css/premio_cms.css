@@ -7,6 +7,15 @@ margin:0;
 max-width: 100vw;
 }
 
+.operating-hours-mobile {
+width: 65vw;
+}
+.operating-hours-mobile>* {
+font-size: 12px;
+}
+.card-header-mobile>* {
+font-size:12px;
+}
 .no-overflow{
 margin: 0;
 width: 100vw;
