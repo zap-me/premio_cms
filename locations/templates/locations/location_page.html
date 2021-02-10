@@ -37,23 +37,23 @@
                 <iframe
                     class="mx-auto d-block"
                     width="400" height="250" frameborder="0" style="border:0"
-                                                             src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18" allowfullscreen>
+                    src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18" allowfullscreen>
                 </iframe>
             </div>
         </div>
-   {% endif %}
+    {% endif %}
 
     {% if page.tags.all.count %}
-    <div class="row">
-        <div class="col m-3">
-            <div class="text-center">
-                <h5>Tags</h5>
-                {% for tag in page.tags.all %}
-                    <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button" class="btn-sm btn-info">{{ tag }}</button></a>
-                {% endfor %}
+        <div class="row">
+            <div class="col m-3">
+                <div class="text-center">
+                    <h5>Tags</h5>
+                    {% for tag in page.tags.all %}
+                        <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button" class="btn-sm btn-info">{{ tag }}</button></a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
     {% endif %}
 
     <div class="row">
