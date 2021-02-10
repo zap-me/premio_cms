@@ -124,6 +124,13 @@ class LocationPage(Page):
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=LocationPageTag, blank=True)
     lat_long = models.CharField(blank=True, max_length=30, verbose_name='Latitude, longitude')
+    mon_hours=models.CharField(blank=True,max_length=100)
+    tue_hours=models.CharField(blank=True,max_length=100)
+    wed_hours=models.CharField(blank=True,max_length=100)
+    thu_hours=models.CharField(blank=True,max_length=100)
+    fri_hours=models.CharField(blank=True,max_length=100)
+    sat_hours=models.CharField(blank=True,max_length=100)
+    sun_hours=models.CharField(blank=True,max_length=100)
     def main_image(self):
         gallery_item = self.gallery_images.first()
         if gallery_item:
@@ -145,6 +152,16 @@ class LocationPage(Page):
         FieldPanel('intro'),
         FieldPanel('body'),
         InlinePanel('gallery_images', label="Gallery images"),
+        MultiFieldPanel([
+            FieldPanel('mon_hours', heading="Monday Operating Hours"),
+            FieldPanel('tue_hours', heading="Tuesday Operating Hours"),
+            FieldPanel('wed_hours', heading="Wednesday Operating Hours"),
+            FieldPanel('thu_hours', heading="Thursday Operating Hours"),
+            FieldPanel('fri_hours', heading="Friday Operating Hours"),
+            FieldPanel('sat_hours', heading="Saturday Operating Hours"),
+            FieldPanel('sun_hours', heading="Sunday Operating Hours")],
+            heading="Operating Hours"
+        )
     ]
 
 class LocationPageGalleryImage(Orderable):
