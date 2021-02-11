@@ -1,421 +1,404 @@
 {% extends "base.html" %}
-
 {% load wagtailcore_tags wagtailimages_tags %}
-
 {% block body_class %}template-locationsindexpage{% endblock %}
-
 {% block content %}
 <style>
-@import url({{ page.primary_font_url }}); 
-a,p,h1,h2,h3,h4,h5,h6 {
-{{ page.primary_font_family|richtext }}
-color: {{ page.primary_font_color }}
-}
-.color-fluid {
-background-color:{{ page.page_theme_color }};
-border-radius: 10%;
-border: none;
-}
-.white-text{
-text-decoration: none;
-font-color: white;
-}
-a,a:hover{
-text-decoration: none;
-color: white;
-}
-.caption-banner {
-background-color:{{ page.page_theme_color }};
-}
-body{
-background-color:{{ page.page_background_color }};
-}
-.card-color{
-background-color:{{ page.content_card_color }};
-}
+    @import url({{ page.primary_font_url }}); 
+    .color-fluid {
+    background-color:#0d6efd;
+    border-radius: 10%;
+    border: none;
+    }
+    .white-text{
+    text-decoration: none;
+    font-color: white;
+    }
+    a,a:hover{
+    text-decoration: none;
+    color: white;
+    }
+    .caption-banner {
+    background-color:#0d6efd;
+    }
 </style>
-
 <div class="page-content-shown">
-<!-- one of the templates will get rendered here depending on what the client device is -->
+    <!-- one of the templates will get rendered here depending on what the client device is -->
 </div>
 <template id='mobile-content'>
-   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-  <path fill="{{ page.page_theme_color }}" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,234.7C672,203,768,117,864,74.7C960,32,1056,32,1152,26.7C1248,21,1344,11,1392,5.3L1440,0L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-</svg> 
-   <svg class="top-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-  <path fill="#FFFFFF" fill-opacity="0.1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,234.7C672,203,768,117,864,74.7C960,32,1056,32,1152,26.7C1248,21,1344,11,1392,5.3L1440,0L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-</svg> 
-<div class="promotions-holder">
-    <div class="content-title-holder mt-2">
-       <h2 class="ml-4">Promotions</h2>
-	<!-- replace w/ static file later -->
-    </div>
-    {% if page.promoted_pages.count %}
-    <div class="swiper-promotions-container mt-4 anm fdu">
-        <div class="swiper-wrapper"> 
-            {% for i,p in indexed_promoted_pages %}
-                {% with p.promoted_page.specific as promoted_page %}	
-		    {% include "promotions-carousel.html" with p=p %}
-                {% endwith %}
-            {% endfor %}
-        </div>
-    </div>
-</div>
-<div class="locations-index-pg-bottom">
-    <svg class="bottom-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-  <path fill="{{ page.page_theme_color }}" fill-opacity="1" d="M0,64L48,64C96,64,192,64,288,64C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,96C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-    </svg> 
-    <svg  class="top-svg top-svg-tags" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-  <path fill="#FFFFFF" fill-opacity="0.1" d="M0,64L48,64C96,64,192,64,288,64C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,96C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#0d6efd" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,234.7C672,203,768,117,864,74.7C960,32,1056,32,1152,26.7C1248,21,1344,11,1392,5.3L1440,0L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
     </svg>
-    {% endif %}
-
-    {% for tag, pages in locationpagetags.items %}
-        {% if pages.count %}
-            <div class="item-container-holder">
-		<div class="content-title-holder anm fdu">
-		    <h2 class="ml-4">{{ tag | title }}</h2>
-		    <a class="a-color" href="{% slugurl 'tags' %}?tag={{ tag }}"><p class="mr-3  mt-3">See all</p></a>
-		</div>
-		<div class="swiper-container">
-			<div class="swiper-wrapper">
-				{% for child in pages %}
-					{% include "location_preview.html" with page=child.specific %}
-				{% endfor %}
-			</div>
-		</div>
-            </div>
-	    <div class="svg-content-holder">
-            </div>
-		<svg  class="mt-3 bottom-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-	  <path fill="{{ page.page_theme_color }}" fill-opacity="1" d="M0,64L48,64C96,64,192,64,288,64C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,96C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-		</svg>
-		<svg  class="top-svg top-svg-tags" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-	  <path fill="#FFFFFF" fill-opacity="0.1" d="M0,64L48,64C96,64,192,64,288,64C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,96C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-		</svg>
-        {% endif %}
-    {% endfor %}
-    {% if locationsnearme %}
-    <div class="item-container-holder">
-	    <div class="content-title-holder">
-		<h2 class="ml-4">Near Me</h2>
-		<!-- replace w/ static file later -->
-	    </div>
-	    <div class="swiper-container">
-		<div class="swiper-wrapper">
-		    {% for page in locationsnearme %}
-			{% include "location_preview.html" with page=page.specific %}
-		    {% endfor %}
-		</div>
-	    </div>
-    </div>
-    {% endif %}
-</div>
-</template>
-
-<template id='desktop-content'>
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-	  <path fill="{{ page.page_theme_color }}" fill-opacity="1" d="M0,32L120,37.3C240,43,480,53,720,48C960,43,1200,21,1320,10.7L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path>
-	</svg>
-	<svg class="top-svg-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-	  <path fill="#FFFFFF" fill-opacity="0.1" d="M0,32L120,37.3C240,43,480,53,720,48C960,43,1200,21,1320,10.7L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path>
-	</svg>
-        <div class="desktop-locations-holder">
-	    <div class="content-title-holder">
-	       <h2 class="ml-4 mt-4">Promotions</h2>
-	    </div>
-	    {% if page.promoted_pages.count %}
-	    <div class="swiper-promotions-desktop mt-5 ml-4">
-		<div class="swiper-wrapper"> 
-		    {% for i,p in indexed_promoted_pages %}
-			{% with p.promoted_page.specific as promoted_page %}	
-			    {% include "location_card_desktop.html" with page=promoted_page %}
-			{% endwith %}
-		    {% endfor %}
-		</div>
-	    </div>
-	   {% endif %}
-	   {% for tag, pages in locationpagetags.items %}
-	       {% if pages.count %}
-	       <div class="content-title-holder mt-5">
-		   <h2 class="ml-4 mt-4">{{ tag | title }}</h2>
-	       </div>
-	       <div class="swiper-promotions-desktop mt-5 ml-4">
-		<div class="swiper-wrapper">
-			{% for child in pages %}
-				{% include "location_card_desktop.html" with page=child.specific %}
-			{% endfor %}
-		       </div>
-	       </div>
-	       {% endif %}
-	   {% endfor %}
-
-	    <div class="content-title-holder mt-5">
-                <h2 class="ml-4 mt-4">Near Me</h2>
-	    </div>
-	    <div class="swiper-promotions-desktop mt-5 ml-4">
-		<div class="swiper-wrapper">
-		    {% for page in locationsnearme %}
-			{% include "location_card_desktop.html" with page=page.specific %}
-		    {% endfor %}
-		</div>
-	    </div>
+    <svg class="top-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#FFFFFF" fill-opacity="0.1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,234.7C672,203,768,117,864,74.7C960,32,1056,32,1152,26.7C1248,21,1344,11,1392,5.3L1440,0L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+    </svg>
+    <div class="promotions-holder">
+        <div class="content-title-holder mt-2">
+            <h2 class="ml-4">Promotions</h2>
+            <!-- replace w/ static file later -->
         </div>
+        {% if page.promoted_pages.count %}
+        <div class="swiper-promotions-container mt-4 anm fdu">
+            <div class="swiper-wrapper"> 
+                {% for i,p in indexed_promoted_pages %}
+                {% with p.promoted_page.specific as promoted_page %}	
+                {% include "promotions-carousel.html" with p=p %}
+                {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="locations-index-pg-bottom">
+        <svg class="bottom-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#0d6efd" fill-opacity="1" d="M0,64L48,64C96,64,192,64,288,64C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,96C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+        </svg>
+        <svg  class="top-svg top-svg-tags" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#FFFFFF" fill-opacity="0.1" d="M0,64L48,64C96,64,192,64,288,64C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,96C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+        </svg>
+        {% endif %}
+        {% for tag, pages in locationpagetags.items %}
+        {% if pages.count %}
+        <div class="item-container-holder">
+            <div class="content-title-holder anm fdu">
+                <h2 class="ml-4">{{ tag | title }}</h2>
+                <a class="a-color" href="{% slugurl 'tags' %}?tag={{ tag }}">
+                    <p class="mr-3  mt-3">See all</p>
+                </a>
+            </div>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for child in pages %}
+                    {% include "location_preview.html" with page=child.specific %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="svg-content-holder">
+        </div>
+        <svg  class="mt-3 bottom-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="" fill-opacity="1" d="M0,64L48,64C96,64,192,64,288,64C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,96C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+        </svg>
+        <svg  class="top-svg top-svg-tags" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#FFFFFF" fill-opacity="0.1" d="M0,64L48,64C96,64,192,64,288,64C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,96C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+        </svg>
+        {% endif %}
+        {% endfor %}
+        {% if locationsnearme %}
+        <div class="item-container-holder">
+            <div class="content-title-holder">
+                <h2 class="ml-4">Near Me</h2>
+                <!-- replace w/ static file later -->
+            </div>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for page in locationsnearme %}
+                    {% include "location_preview.html" with page=page.specific %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</template>
+<template id='desktop-content'>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#0d6efd" fill-opacity="1" d="M0,32L120,37.3C240,43,480,53,720,48C960,43,1200,21,1320,10.7L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path>
+    </svg>
+    <svg class="top-svg-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#FFFFFF" fill-opacity="0.1" d="M0,32L120,37.3C240,43,480,53,720,48C960,43,1200,21,1320,10.7L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path>
+    </svg>
+    <div class="desktop-locations-holder">
+        <div class="content-title-holder">
+            <h2 class="ml-4 mt-4">Promotions</h2>
+        </div>
+        {% if page.promoted_pages.count %}
+        <div class="swiper-promotions-desktop mt-5 ml-4">
+            <div class="swiper-wrapper"> 
+                {% for i,p in indexed_promoted_pages %}
+                {% with p.promoted_page.specific as promoted_page %}	
+                {% include "location_card_desktop.html" with page=promoted_page %}
+                {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% for tag, pages in locationpagetags.items %}
+        {% if pages.count %}
+        <div class="content-title-holder mt-5">
+            <h2 class="ml-4 mt-4">{{ tag | title }}</h2>
+        </div>
+        <div class="swiper-promotions-desktop mt-5 ml-4">
+            <div class="swiper-wrapper">
+                {% for child in pages %}
+                {% include "location_card_desktop.html" with page=child.specific %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="content-title-holder mt-5">
+            <h2 class="ml-4 mt-4">Near Me</h2>
+        </div>
+        <div class="swiper-promotions-desktop mt-5 ml-4">
+            <div class="swiper-wrapper">
+                {% for page in locationsnearme %}
+                {% include "location_card_desktop.html" with page=page.specific %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </template>
 <template id='mobile-horizontal-content'>
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-	  <path fill="{{ page.page_theme_color }}" fill-opacity="1" d="M0,32L120,37.3C240,43,480,53,720,48C960,43,1200,21,1320,10.7L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path>
-	</svg>
-	<svg class="top-svg-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-	  <path fill="#FFFFFF" fill-opacity="0.1" d="M0,32L120,37.3C240,43,480,53,720,48C960,43,1200,21,1320,10.7L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path>
-	</svg>
-        <div class="horizontal">
-	    <div class="content-title-holder">
-	       <h2 class="ml-4 mt-4">Promotions</h2>
-	    </div>
-	    {% if page.promoted_pages.count %}
-	    <div class="swiper-promotions-desktop mt-5 ml-4">
-		<div class="swiper-wrapper"> 
-		    {% for i,p in indexed_promoted_pages %}
-			{% with p.promoted_page.specific as promoted_page %}	
-			    {% include "location_card_horizontal.html" with page=promoted_page %}
-			{% endwith %}
-		    {% endfor %}
-		</div>
-	    </div>
-	   {% endif %}
-	   {% for tag, pages in locationpagetags.items %}
-	       {% if pages.count %}
-	       <div class="content-title-holder mt-5">
-		   <h2 class="ml-4 mt-4">{{ tag | title }}</h2>
-	       </div>
-	       <div class="swiper-promotions-desktop mt-5 ml-4">
-		<div class="swiper-wrapper">
-			{% for child in pages %}
-				{% include "location_card_horizontal.html" with page=child.specific %}
-			{% endfor %}
-		       </div>
-	       </div>
-	       {% endif %}
-	   {% endfor %}
-
-	    <div class="content-title-holder mt-5">
-                <h2 class="ml-4 mt-4">Near Me</h2>
-	    </div>
-	    <div class="swiper-promotions-desktop mt-5 ml-4">
-		<div class="swiper-wrapper">
-		    {% for page in locationsnearme %}
-			{% include "location_card_horizontal.html" with page=page.specific %}
-		    {% endfor %}
-		</div>
-	    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#0d6efd" fill-opacity="1" d="M0,32L120,37.3C240,43,480,53,720,48C960,43,1200,21,1320,10.7L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path>
+    </svg>
+    <svg class="top-svg-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#FFFFFF" fill-opacity="0.1" d="M0,32L120,37.3C240,43,480,53,720,48C960,43,1200,21,1320,10.7L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path>
+    </svg>
+    <div class="horizontal">
+        <div class="content-title-holder">
+            <h2 class="ml-4 mt-4">Promotions</h2>
         </div>
+        {% if page.promoted_pages.count %}
+        <div class="swiper-promotions-desktop mt-5 ml-4">
+            <div class="swiper-wrapper"> 
+                {% for i,p in indexed_promoted_pages %}
+                {% with p.promoted_page.specific as promoted_page %}	
+                {% include "location_card_horizontal.html" with page=promoted_page %}
+                {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% for tag, pages in locationpagetags.items %}
+        {% if pages.count %}
+        <div class="content-title-holder mt-5">
+            <h2 class="ml-4 mt-4">{{ tag | title }}</h2>
+        </div>
+        <div class="swiper-promotions-desktop mt-5 ml-4">
+            <div class="swiper-wrapper">
+                {% for child in pages %}
+                {% include "location_card_horizontal.html" with page=child.specific %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="content-title-holder mt-5">
+            <h2 class="ml-4 mt-4">Near Me</h2>
+        </div>
+        <div class="swiper-promotions-desktop mt-5 ml-4">
+            <div class="swiper-wrapper">
+                {% for page in locationsnearme %}
+                {% include "location_card_horizontal.html" with page=page.specific %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </template>
-    <script>
-        var currentDeviceRotation;
-        var devicePortrait;
-	var pageContentShown = document.querySelector(".page-content-shown");
-        function setUpContent() {
-	    const isMobile =( matchMedia('(max-device-width: 844px)').matches);
-	    if(isMobile === true) {
-                if(matchMedia( "(orientation: portrait)").matches) {
-                        devicePortrait=true;
-			var mobileTemplate = document.querySelector("#mobile-content");
-			var clone = mobileTemplate.content.cloneNode(true);
-			pageContentShown.appendChild(clone);
-			var generalSwiper = new Swiper('.swiper-container', {
-			    slidesPerView: 2,
-			    spaceBetween: 2,
-			    centerInsufficientSlides: true,
-			    loop: true,
-			    effect: 'coverflow',
-			    coverflowEffect: {
-			    rotate: 50,
-			    stretch: 0,
-			    depth: 100,
-			    modifier: 1,
-			    slideShadows: false,
-			  },
-			    pagination: {
-			    
-				el: '.swiper-pagination',
-				clickable: true,
-			    }
-			});
-			var promotionsSwiper = new Swiper('.swiper-promotions-container', {
-			    slidesPerView: 1,
-			    spaceBetween: 2,
-			    effect: 'coverflow',
-			    coverflowEffect: {
-			    rotate: 50,
-			    stretch: 0,
-			    depth: 100,
-			    modifier: 1,
-			    autoplay: {delay: 2},
-			    slideShadows: false,
-			  },
-			    pagination: {
-			    
-				el: '.swiper-pagination',
-				clickable: true,
-			    }
-			});
-
-               } else {
-
-                        devicePortrait=false;
-			var desktopTemplate = document.querySelector("#mobile-horizontal-content");
-			var clone = desktopTemplate.content.cloneNode(true);
-			pageContentShown.appendChild(clone);
-		       var promotionsSwiper = new Swiper('.swiper-promotions-desktop', {
-			  slidesPerView: 3,
-			  slidesPerColumn: 1,
-			  spaceBetween: 15,
-			  pagination: {
-			    el: '.swiper-pagination',
-			    clickable: true,
-			  },
-			}); 
-
-               }
-	    } else {
-
-                devicePortrait=false;
-		var desktopTemplate = document.querySelector("#desktop-content");
-		var clone = desktopTemplate.content.cloneNode(true);
-		pageContentShown.appendChild(clone);
-	       var promotionsSwiper = new Swiper('.swiper-promotions-desktop', {
-		  slidesPerView: 3,
-		  slidesPerColumn: 1,
-		  spaceBetween: 15,
-		  pagination: {
-		    el: '.swiper-pagination',
-		    clickable: true,
-		  },
-		}); 
-	    }
-                const observer=lozad(".lazy");
-                observer.observe();
-        }
-        //sets up page content
-        setUpContent(); 
-
-        function setCookie(name, value, seconds) {
-            var expires = "";
-            if (seconds) {
-                var date = new Date();
-                date.setTime(date.getTime() + (seconds * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-            console.log('setCookie: ' + name + '=' + value);
-        }
-
-        function getCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for(var i=0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) {
-                    var value = c.substring(nameEQ.length, c.length);
-                    console.log('getCookie: ' + name + '=' + value);
-                    return value;
-                }
-            }
-            return null;
-        }
-
-        function geoLocation(position) {
-            console.log('geolocation:' + position);
-            setCookie('geo', position.coords.latitude + ',' + position.coords.longitude, 300);
-            location.reload();
-        }
-
-        function geoError(error){
-            console.log("error " + error.code);
-        }
+<script>
+    var currentDeviceRotation;
+    var devicePortrait;
+    var pageContentShown = document.querySelector(".page-content-shown");
+    function setUpContent() {
+    const isMobile =( matchMedia('(max-device-width: 844px)').matches);
+    if(isMobile === true) {
+            if(matchMedia( "(orientation: portrait)").matches) {
+                    devicePortrait=true;
+    var mobileTemplate = document.querySelector("#mobile-content");
+    var clone = mobileTemplate.content.cloneNode(true);
+    pageContentShown.appendChild(clone);
+    var generalSwiper = new Swiper('.swiper-container', {
+    slidesPerView: 2,
+    spaceBetween: 2,
+    centerInsufficientSlides: true,
+    loop: true,
+    effect: 'coverflow',
+    coverflowEffect: {
+    rotate: 50,
+    stretch: 0,
+    depth: 100,
+    modifier: 1,
+    slideShadows: false,
+    },
+    pagination: {
     
-        if (getCookie('geo') == null) {
-            console.log('requesting geolocation..');
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(geoLocation, geoError);
-            }
-            else {
-                console.error('geolocation not supported');
-            }
-        }
-
-        window.addEventListener("orientationchange", function() {
-            while (pageContentShown.firstChild) {
-                pageContentShown.removeChild(pageContentShown.firstChild);
-            }
-                devicePortrait = !devicePortrait;
-                if(!devicePortrait) {
-                    console.log("landscape");
-			var desktopTemplate = document.querySelector("#mobile-horizontal-content");
-			var clone = desktopTemplate.content.cloneNode(true);
-			pageContentShown.appendChild(clone);
-		       var promotionsSwiper = new Swiper('.swiper-promotions-desktop', {
-			  slidesPerView: 3,
-			  slidesPerColumn: 1,
-			  spaceBetween: 15,
-			  pagination: {
-			    el: '.swiper-pagination',
-			    clickable: true,
-			  },
-			}); 
-                } else {
-
-                    document.getElementById("parent-container").style="overflow-x: hidden;";
-		        var mobileTemplate = document.querySelector("#mobile-content");
-			var clone = mobileTemplate.content.cloneNode(true);
-			pageContentShown.appendChild(clone);
-			var generalSwiper = new Swiper('.swiper-container', {
-			    slidesPerView: 2,
-			    spaceBetween: 2,
-			    centerInsufficientSlides: true,
-			    loop: true,
-			    effect: 'coverflow',
-			    coverflowEffect: {
-			    rotate: 50,
-			    stretch: 0,
-			    depth: 100,
-			    modifier: 1,
-			    slideShadows: false,
-			  },
-			    pagination: {
-			    
-				el: '.swiper-pagination',
-				clickable: true,
-			    }
-			});
-			var promotionsSwiper = new Swiper('.swiper-promotions-container', {
-			    slidesPerView: 1,
-			    spaceBetween: 2,
-			    effect: 'coverflow',
-			    coverflowEffect: {
-			    rotate: 50,
-			    stretch: 0,
-			    depth: 100,
-			    modifier: 1,
-			    autoplay: {delay: 2},
-			    slideShadows: false,
-			  },
-			    pagination: {
-			    
-				el: '.swiper-pagination',
-				clickable: true,
-			    }
-			});
-                    console.log("portrait");
-               }
-
+    el: '.swiper-pagination',
+    clickable: true,
+    }
+    });
+    var promotionsSwiper = new Swiper('.swiper-promotions-container', {
+    slidesPerView: 1,
+    spaceBetween: 2,
+    effect: 'coverflow',
+    coverflowEffect: {
+    rotate: 50,
+    stretch: 0,
+    depth: 100,
+    modifier: 1,
+    autoplay: {delay: 2},
+    slideShadows: false,
+    },
+    pagination: {
+    
+    el: '.swiper-pagination',
+    clickable: true,
+    }
+    });
+    
+           } else {
+    
+                    devicePortrait=false;
+    var desktopTemplate = document.querySelector("#mobile-horizontal-content");
+    var clone = desktopTemplate.content.cloneNode(true);
+    pageContentShown.appendChild(clone);
+     var promotionsSwiper = new Swiper('.swiper-promotions-desktop', {
+    slidesPerView: 3,
+    slidesPerColumn: 1,
+    spaceBetween: 15,
+    pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+    },
+    }); 
+    
+           }
+    } else {
+    
+            devicePortrait=false;
+    var desktopTemplate = document.querySelector("#desktop-content");
+    var clone = desktopTemplate.content.cloneNode(true);
+    pageContentShown.appendChild(clone);
+    var promotionsSwiper = new Swiper('.swiper-promotions-desktop', {
+    slidesPerView: 3,
+    slidesPerColumn: 1,
+    spaceBetween: 15,
+    pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+    },
+    }); 
+    }
             const observer=lozad(".lazy");
             observer.observe();
-            console.log("device rotated!!!!!!!!");
-        }, false);
-       
-    </script>
-
+    }
+    //sets up page content
+    setUpContent(); 
+    
+    function setCookie(name, value, seconds) {
+        var expires = "";
+        if (seconds) {
+            var date = new Date();
+            date.setTime(date.getTime() + (seconds * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        console.log('setCookie: ' + name + '=' + value);
+    }
+    
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) {
+                var value = c.substring(nameEQ.length, c.length);
+                console.log('getCookie: ' + name + '=' + value);
+                return value;
+            }
+        }
+        return null;
+    }
+    
+    function geoLocation(position) {
+        console.log('geolocation:' + position);
+        setCookie('geo', position.coords.latitude + ',' + position.coords.longitude, 300);
+        location.reload();
+    }
+    
+    function geoError(error){
+        console.log("error " + error.code);
+    }
+    
+    if (getCookie('geo') == null) {
+        console.log('requesting geolocation..');
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(geoLocation, geoError);
+        }
+        else {
+            console.error('geolocation not supported');
+        }
+    }
+    
+    window.addEventListener("orientationchange", function() {
+        while (pageContentShown.firstChild) {
+            pageContentShown.removeChild(pageContentShown.firstChild);
+        }
+            devicePortrait = !devicePortrait;
+            if(!devicePortrait) {
+                console.log("landscape");
+    var desktopTemplate = document.querySelector("#mobile-horizontal-content");
+    var clone = desktopTemplate.content.cloneNode(true);
+    pageContentShown.appendChild(clone);
+     var promotionsSwiper = new Swiper('.swiper-promotions-desktop', {
+    slidesPerView: 3,
+    slidesPerColumn: 1,
+    spaceBetween: 15,
+    pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+    },
+    }); 
+            } else {
+    
+                document.getElementById("parent-container").style="overflow-x: hidden;";
+      var mobileTemplate = document.querySelector("#mobile-content");
+    var clone = mobileTemplate.content.cloneNode(true);
+    pageContentShown.appendChild(clone);
+    var generalSwiper = new Swiper('.swiper-container', {
+    slidesPerView: 2,
+    spaceBetween: 2,
+    centerInsufficientSlides: true,
+    loop: true,
+    effect: 'coverflow',
+    coverflowEffect: {
+    rotate: 50,
+    stretch: 0,
+    depth: 100,
+    modifier: 1,
+    slideShadows: false,
+    },
+    pagination: {
+    
+    el: '.swiper-pagination',
+    clickable: true,
+    }
+    });
+    var promotionsSwiper = new Swiper('.swiper-promotions-container', {
+    slidesPerView: 1,
+    spaceBetween: 2,
+    effect: 'coverflow',
+    coverflowEffect: {
+    rotate: 50,
+    stretch: 0,
+    depth: 100,
+    modifier: 1,
+    autoplay: {delay: 2},
+    slideShadows: false,
+    },
+    pagination: {
+    
+    el: '.swiper-pagination',
+    clickable: true,
+    }
+    });
+                console.log("portrait");
+           }
+    
+        const observer=lozad(".lazy");
+        observer.observe();
+        console.log("device rotated!!!!!!!!");
+    }, false);
+    
+</script>
 {% endblock %}
