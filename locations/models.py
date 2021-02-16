@@ -44,12 +44,6 @@ class LocationsIndexPage(Page):
     max_dist_km = models.IntegerField(default=50, verbose_name='maximum distance (km)')
     promoted_pages_title = models.CharField(blank=True, max_length=250, verbose_name='Promoted Locations Title')
     promoted_pages_intro = RichTextField(blank=True, verbose_name='Promoted Locations Intro')
-    page_theme_color=ColorField(default="#007bf")
-    primary_font_url=models.CharField(max_length=250,verbose_name="Primary Font URL",default="https://fonts.googleapis.com/css2?family=Spartan:wght@300;600&display=swap")
-    primary_font_family=models.CharField(max_length=250,verbose_name="Primary Font Family",default="font-family: 'Spartan', sans-serif;")
-    primary_font_color=ColorField(default="#000000")
-    page_background_color=ColorField(default="#FFFFFF")
-    content_card_color=ColorField(default="#FFFFFF")
     def get_context(self, request):
         context = super().get_context(request)
         # promoted pages
@@ -89,14 +83,6 @@ class LocationsIndexPage(Page):
             FieldPanel('show_near_me'),
             FieldPanel('max_dist_km'),
         ], heading='Locations near me'),
-        MultiFieldPanel([
-            NativeColorPanel('page_theme_color'),
-            FieldPanel('primary_font_url'),
-            FieldPanel('primary_font_family'),
-            NativeColorPanel('primary_font_color'),
-            NativeColorPanel('page_background_color'),
-            NativeColorPanel('content_card_color') 
-        ],heading="Styling - This will affect all your subsequent page themes")
     ]
 
 class LocationsIndexPromotedPage(Orderable):
