@@ -1,20 +1,21 @@
 {% load wagtailcore_tags wagtailimages_tags lazyimages_tags %}
-{% with p.promoted_page.specific as promoted_page %}	
-<div class="swiper-slide promo-card">
-    <a href="{% pageurl promoted_page %}">
-        <div class="card shadow-lg" style="width: 100%;">
-            {% with promoted_page.main_image as main_image %}
-            {% if main_image %}{% lazy_image main_image fill-748x380-c100 class="card-img-top lazy" %}{% endif %}
-            {% endwith %}
-            <div class="card-body card-color" style="height: 15vh;">
-                <h5 class="card-title">{{ promoted_page.title }}</h5>
-                <button class="color-fluid">
-    <a href="{% pageurl promoted_page %}" class="mt-2">Learn more</a></button>
+{% with p.promoted_page.specific as promoted_page %}    
+    <div class="swiper-slide promo-card">
+        <a href="{% pageurl promoted_page %}">
+            <div class="card shadow-lg" style="width: 100%;">
+                {% with promoted_page.main_image as main_image %}
+                    {% if main_image %}{% lazy_image main_image fill-748x380-c100 class="card-img-top lazy" %}{% endif %}
+                {% endwith %}
+                <div class="card-body card-color" style="height: 15vh;">
+                    <h5 class="card-title">{{ promoted_page.title }}</h5>
+                    <button class="color-fluid">
+                        <a href="{% pageurl promoted_page %}" class="mt-2">Learn more</a>
+                    </button>
+                </div>
+            </div>
+        </a>
+        <div class="caption-banner">
+            <p style="color: white;">{{ p.caption }}</p>
+        </div>
     </div>
-    </div>
-    </a>
-    <div class="caption-banner">
-        <p style="color: white;">{{ p.caption }}</p>
-    </div>
-</div>
 {% endwith %}

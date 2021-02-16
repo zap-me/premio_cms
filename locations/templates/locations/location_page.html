@@ -2,165 +2,166 @@
 {% load wagtailcore_tags wagtailimages_tags lazyimages_tags %}
 {% block body_class %}template-locationpage{% endblock %}
 {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
-<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
-<div id="page-container" style="width: 100%">
-    <template id="mobile-content">
-        <style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <div id="page-container" style="width: 100%">
+        <template id="mobile-content">
+            <style>
             .map {
             height: 150px;
             width: 100%;
             }
-        </style>
-        <a href="{{ page.get_parent.url }}">
-            <div class="premio-back-btn premio-back-btn anm fdr">
-                <img src="https://img.icons8.com/android/96/000000/back.png" width="15px" height="15px"/>
-            </div>
-        </a>
-        <div class="swiper-location-page-images">
-            <div class="swiper-wrapper">
-                {% for item in page.gallery_images.all %}
-                <div class="swiper-slide">
-                    {% lazy_image item.image fill-600x600-c100 class="location-page-img lazy" %}
+            </style>
+            <a href="{{ page.get_parent.url }}">
+                <div class="premio-back-btn premio-back-btn anm fdr">
+                    <img src="https://img.icons8.com/android/96/000000/back.png" width="15px" height="15px"/>
                 </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% if page.lat_long %}
-        <div class="row">
-            <div class="row anm fdr" style="width:90vw;">
-                <div class="col">
-                    <div class="mt-2 ml-4">
-                        <h2><b>{{ page.title }}</b></h2>
-                        <p class="mobile-address-view mt-3"><i>{{ page.address }}</i></p>
-                        {% if page.mon_hours %}
-                        <div class="operating-hours-mobile" id="accordion">
-                            <div class="card">
-                                <div class="card-header text-center card-header-mobile" id="headingOne">
-                                    <h5 class="mb-0">
-                                        <button style="font-size:12px;" class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Operating Hours 
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
-                                            </svg>
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                                    <div class="card-body text-center">
-                                        <p><b>
-                                            Monday: {{ page.mon_hours|richtext }}<br>
-                                            Tuesday: {{ page.tue_hours|richtext }}<br>
-                                            Wednesday: {{ page.wed_hours|richtext }}<br>
-                                            Thursday: {{ page.thu_hours|richtext }}<br>
-                                            Friday: {{ page.fri_hours|richtext }}<br>
-                                            Saturday: {{ page.sat_hours|richtext }}<br>
-                                            Sunday: {{ page.sun_hours|richtext }}<br>
-                                            </b>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+            </a>
+            <div class="swiper-location-page-images">
+                <div class="swiper-wrapper">
+                    {% for item in page.gallery_images.all %}
+                        <div class="swiper-slide">
+                            {% lazy_image item.image fill-600x600-c100 class="location-page-img lazy" %}
                         </div>
-                        {% endif %}
-                        <div class="page-body mt-4 body-font">
-                            {{ page.body|richtext }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="placeholder-div"></div>
-            <div class="shadow-lg mx-auto rounded" style="width: 100vw;">
-                <div class="map" id="map"></div>
-            </div>
-        </div>
-        <div class="mt-5 text-center">
-            <a href="https://www.google.com/maps/@{{page.specific.lat_long}},18z"><button type="button" class="btn btn-outline-primary">Open in Google Maps</button></a>
-        </div>
-        {% endif %}
-        {% if page.tags.all.count %}
-        <div class="row">
-            <div class="col m-3">
-                <div class="text-center mt-3">
-                    <h5>Tags</h5>
-                    {% for tag in page.tags.all %}
-                    <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag }}</a>
                     {% endfor %}
                 </div>
             </div>
-        </div>
-        {% endif %}
-    </template>
-    <template id="desktop-content">
-        <style>
-            .map {
-            height: 300px;
-            width: 100%;
-            }
-        </style>
-        <div class="mt-3 mb-3">
-            <a href="{{ page.get_parent.url }}">
-            <img class="ml-3" src="https://img.icons8.com/android/96/000000/back.png" width="30px" height="30px"/>
-            </a>
-        </div>
-        {% lazy_image page.main_image fill-2000x2000-c100 class="desktop-location-page-img lazy" %}
-        <p class="text-center mt-5 location-title-heading"><b>{{ page.title|richtext }}</b></p>
-        <h4 class="text-center mt-5">
-        {{ page.intro|richtext}}</h3>
-        {% if page.mon_hours %}
-        <div class="operating-hours mt-5" id="accordion">
-            <div class="card">
-                <div class="card-header text-center" id="headingOne">
-                    <h5 class="mb-0">
-                        <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Operating Hours 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
-                            </svg>
-                        </button>
-                    </h5>
-                </div>
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                    <div class="card-body text-center">
-                        <p><b>
-                            Monday: {{ page.mon_hours|richtext }}<br>
-                            Tuesday: {{ page.tue_hours|richtext }}<br>
-                            Wednesday: {{ page.wed_hours|richtext }}<br>
-                            Thursday: {{ page.thu_hours|richtext }}<br>
-                            Friday: {{ page.fri_hours|richtext }}<br>
-                            Saturday: {{ page.sat_hours|richtext }}<br>
-                            Sunday: {{ page.sun_hours|richtext }}<br>
-                            </b>
-                        </p>
+            {% if page.lat_long %}
+                <div class="row">
+                    <div class="row anm fdr" style="width:90vw;">
+                        <div class="col">
+                            <div class="mt-2 ml-4">
+                                <h2><b>{{ page.title }}</b></h2>
+                                <p class="mobile-address-view mt-3"><i>{{ page.address }}</i></p>
+                                {% if page.mon_hours %}
+                                    <div class="operating-hours-mobile" id="accordion">
+                                        <div class="card">
+                                            <div class="card-header text-center card-header-mobile" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button style="font-size:12px;" class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        Operating Hours 
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                                        </svg>
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body text-center">
+                                                    <p>
+                                                        <b>
+                                                            Monday: {{ page.mon_hours|richtext }}<br>
+                                                            Tuesday: {{ page.tue_hours|richtext }}<br>
+                                                            Wednesday: {{ page.wed_hours|richtext }}<br>
+                                                            Thursday: {{ page.thu_hours|richtext }}<br>
+                                                            Friday: {{ page.fri_hours|richtext }}<br>
+                                                            Saturday: {{ page.sat_hours|richtext }}<br>
+                                                            Sunday: {{ page.sun_hours|richtext }}<br>
+                                                        </b>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="page-body mt-4 body-font">
+                                    {{ page.body|richtext }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="placeholder-div"></div>
+                    <div class="shadow-lg mx-auto rounded" style="width: 100vw;">
+                        <div class="map" id="map"></div>
                     </div>
                 </div>
+                <div class="mt-5 text-center">
+                    <a href="https://www.google.com/maps/@{{page.specific.lat_long}},18z"><button type="button" class="btn btn-outline-primary">Open in Google Maps</button></a>
+                </div>
+            {% endif %}
+            {% if page.tags.all.count %}
+                <div class="row">
+                    <div class="col m-3">
+                        <div class="text-center mt-3">
+                            <h5>Tags</h5>
+                            {% for tag in page.tags.all %}
+                                <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </template>
+        <template id="desktop-content">
+            <style>
+                .map {
+                height: 300px;
+                width: 100%;
+                }
+            </style>
+            <div class="mt-3 mb-3">
+                <a href="{{ page.get_parent.url }}">
+                    <img class="ml-3" src="https://img.icons8.com/android/96/000000/back.png" width="30px" height="30px"/>
+                </a>
             </div>
-        </div>
-        {% endif %}
-        <div class="mt-5 desktop-page-description text-center">
-            <h5>{{ page.body|richtext }}</h5>
-        </div>
-        <div class="shadow-lg mx-auto rounded" style="width: 100vw;">
-            <div class="mt-5 map" id="map"></div>
-        </div>
-        {% if page.tags.all.count %}
-        <div class="d-flex flex-column justify-content-start align-items-center tags-holder mt-5">
-            <h5>Tags</h5>
-            <div class="d-flex flex-row justify-content-around align-items-center tags-row mt-3">
-                {% for tag in page.tags.all %}
-                <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag }}</a>
-                {% endfor %}
+            {% lazy_image page.main_image fill-2000x2000-c100 class="desktop-location-page-img lazy" %}
+            <p class="text-center mt-5 location-title-heading"><b>{{ page.title|richtext }}</b></p>
+            <h3 class="text-center mt-5">{{ page.intro|richtext}}</h3>
+            {% if page.mon_hours %}
+                <div class="operating-hours mt-5" id="accordion">
+                    <div class="card">
+                        <div class="card-header text-center" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Operating Hours 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                    </svg>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body text-center">
+                                <p>
+                                    <b>
+                                        Monday: {{ page.mon_hours|richtext }}<br>
+                                        Tuesday: {{ page.tue_hours|richtext }}<br>
+                                        Wednesday: {{ page.wed_hours|richtext }}<br>
+                                        Thursday: {{ page.thu_hours|richtext }}<br>
+                                        Friday: {{ page.fri_hours|richtext }}<br>
+                                        Saturday: {{ page.sat_hours|richtext }}<br>
+                                        Sunday: {{ page.sun_hours|richtext }}<br>
+                                    </b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="mt-5 desktop-page-description text-center">
+                <h5>{{ page.body|richtext }}</h5>
             </div>
-        </div>
-        {% endif %}
-    </template>
-</div>
-<script>
-    var latLong = [{{page.specific.lat_long}}];
-    var longLat = [latLong[1],latLong[0]];
-    var pageContentShown=document.querySelector("#page-container");
-    const isMobile = matchMedia('(max-device-width: 844px)').matches;
-    if(isMobile === true) {
+            <div class="shadow-lg mx-auto rounded" style="width: 100vw;">
+                <div class="mt-5 map" id="map"></div>
+            </div>
+            {% if page.tags.all.count %}
+                <div class="d-flex flex-column justify-content-start align-items-center tags-holder mt-5">
+                    <h5>Tags</h5>
+                    <div class="d-flex flex-row justify-content-around align-items-center tags-row mt-3">
+                        {% for tag in page.tags.all %}
+                            <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </template>
+    </div>
+    <script>
+        var latLong = [{{page.specific.lat_long}}];
+        var longLat = [latLong[1],latLong[0]];
+        var pageContentShown=document.querySelector("#page-container");
+        const isMobile = matchMedia('(max-device-width: 844px)').matches;
+        if(isMobile === true) {
         var mobileTemplate = document.querySelector("#mobile-content");
         var clone = mobileTemplate.content.cloneNode(true);
         pageContentShown.appendChild(clone);
@@ -178,12 +179,12 @@
           },
             pagination: {
             
-                el: '.swiper-pagination',
-                clickable: true,
+            el: '.swiper-pagination',
+            clickable: true,
             }
         }); 
-    } else {
-    
+        } else {
+        
         var desktopTemplate=document.querySelector("#desktop-content");
         var clone=desktopTemplate.content.cloneNode(true);
         pageContentShown.appendChild(clone);
@@ -201,13 +202,13 @@
           },
             pagination: {
             
-                el: '.swiper-pagination',
-                clickable: true,
+            el: '.swiper-pagination',
+            clickable: true,
             }
         }); 
-    }
-    const observer = lozad(".lazy");
-    observer.observe();
+        }
+        const observer = lozad(".lazy");
+        observer.observe();
           var map = new ol.Map({
         target: 'map',
         layers: [
@@ -219,16 +220,16 @@
           center: ol.proj.fromLonLat(longLat),
           zoom: 18
         })
-      });
-    var layer = new ol.layer.Vector({
-     source: new ol.source.Vector({
+          });
+        var layer = new ol.layer.Vector({
+         source: new ol.source.Vector({
          features: [
              new ol.Feature({
-                 geometry: new ol.geom.Point(ol.proj.fromLonLat(longLat))
+             geometry: new ol.geom.Point(ol.proj.fromLonLat(longLat))
              })
          ]
-     })
-    });
-    map.addLayer(layer);
-</script>
+         })
+        });
+        map.addLayer(layer);
+    </script>
 {% endblock %}
