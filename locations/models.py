@@ -14,17 +14,23 @@ from wagtail_color_panel.edit_handlers import NativeColorPanel
 
 def geo_coords_dist(lat1, lon1, lat2, lon2):
     from math import sin, cos, sqrt, atan2, radians
+
     # approximate radius of earth in km
     R = 6373.0
+
     lat1 = radians(lat1)
     lon1 = radians(lon1)
     lat2 = radians(lat2)
     lon2 = radians(lon2)
+
     dlon = lon2 - lon1
     dlat = lat2 - lat1
+
     a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
     distance = R * c
+
     return distance
 
 def str2latlon(s):
@@ -44,6 +50,7 @@ class LocationsIndexPage(Page):
     max_dist_km = models.IntegerField(default=50, verbose_name='maximum distance (km)')
     promoted_pages_title = models.CharField(blank=True, max_length=250, verbose_name='Promoted Locations Title')
     promoted_pages_intro = RichTextField(blank=True, verbose_name='Promoted Locations Intro')
+
     def get_context(self, request):
         context = super().get_context(request)
         # promoted pages
@@ -110,6 +117,7 @@ class LocationPage(Page):
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=LocationPageTag, blank=True)
     lat_long = models.CharField(blank=True, max_length=30, verbose_name='Latitude, longitude')
+
     mon_hours=models.CharField(blank=True,max_length=100)
     tue_hours=models.CharField(blank=True,max_length=100)
     wed_hours=models.CharField(blank=True,max_length=100)
@@ -165,10 +173,13 @@ class LocationPageGalleryImage(Orderable):
     ]
 
 class LocationTagIndexPage(Page):
+
     def get_context(self, request):
+
         # Filter by tag
         tag = request.GET.get('tag')
         locationpages = LocationPage.objects.filter(tags__name=tag).live()
+
         # Update template context
         context = super().get_context(request)
         context['locationpages'] = locationpages
