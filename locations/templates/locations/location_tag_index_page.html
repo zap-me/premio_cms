@@ -1,6 +1,9 @@
-{% extends "base.html" %} 
-{% load wagtailcore_tags wagtailimages_tags %} 
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
 {% block content %}
+
     <div class="page-container">
         <template id="mobile-content">
             <div class="page-container">
@@ -12,6 +15,7 @@
                         <h5 class="mt-2 ml-4">{{ request.GET.tag }}</h5>
                     </div>
                 {% endif %}
+                
                 <div class="mt-5 index-pg-content anm fdu">
                     {% for page in locationpages %} 
                         {% include "tags_page_item.html" with page=page.specific %}
@@ -42,6 +46,7 @@
             </div>
         </template>
     </div>
+
     <script>
         var pageContentShown = document.querySelector(".page-container");
         const isMobile = matchMedia("(max-device-width: 844px)").matches;
