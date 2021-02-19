@@ -1,7 +1,9 @@
 from django.db import models
+
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import Tag, TaggedItemBase
+
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
@@ -17,7 +19,7 @@ def geo_coords_dist(lat1, lon1, lat2, lon2):
 
     # approximate radius of earth in km
     R = 6373.0
-
+    
     lat1 = radians(lat1)
     lon1 = radians(lon1)
     lat2 = radians(lat2)
