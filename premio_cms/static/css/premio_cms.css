@@ -1,4 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Spartan:wght@300;600&display=swap');
+.color-fluid {
+background-color: #0d6efd;
+border-radius: 10%;
+border: none;
+}
+.white-text{
+text-decoration: none;
+font-color: white;
+}
+a,a:hover{
+text-decoration: none;
+color: black;
+}
+.white{
+color: white;
+}
+.caption-banner {
+background-color: #0d6efd;
+}
 .container {
 padding:0;
 margin:0;
