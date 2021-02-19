@@ -19,7 +19,7 @@ def geo_coords_dist(lat1, lon1, lat2, lon2):
 
     # approximate radius of earth in km
     R = 6373.0
-    
+
     lat1 = radians(lat1)
     lon1 = radians(lon1)
     lat2 = radians(lat2)
