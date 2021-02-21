@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags static %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
                 {% if request.GET.tag|length %}
                     <div class="tags-index-back-bar mt-2 d-flex justify-content-start align-items-center anm fdu">
                         <a href="{{ page.get_parent.url }}">
-                            <img src="https://img.icons8.com/android/96/000000/back.png" width="30px" height="30px" />
+                            <img src="{% static 'img/back.png' %}" width="30px" height="30px" />
                         </a>
                         <h5 class="mt-2 ml-4">{{ request.GET.tag }}</h5>
                     </div>
@@ -31,7 +31,7 @@
             {% if request.GET.tag|length %}
                 <div class="desktop-location-nav mt-3 mb-3">
                     <a href="{{ page.get_parent.url }}">
-                        <img class="ml-3" src="https://img.icons8.com/android/96/000000/back.png" width="30px" height="30px" />
+                        <img class="ml-3" src="{% static 'img/back.png' %}" width="30px" height="30px" />
                     </a>
                     <h5 class="mt-2 ml-4">{{ request.GET.tag }}</h5>
                 </div>
