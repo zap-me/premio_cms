@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags lazyimages_tags %}
+
 {% block body_class %}template-locationpage{% endblock %}
 
 {% block content %}
@@ -29,6 +30,7 @@
                     {% endfor %}
                 </div>
             </div>
+
             {% if page.lat_long %}
                 <div class="row">
                     <div class="row anm fdr" style="width:90vw;">
@@ -78,6 +80,7 @@
                         <div class="map" id="map"></div>
                     </div>
                 </div>
+
                 <div class="mt-5 text-center">
                     <a href="https://www.google.com/maps/@{{page.specific.lat_long}},18z"><button type="button" class="btn btn-outline-primary">Open in Google Maps</button></a>
                 </div>
