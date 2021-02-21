@@ -1,9 +1,11 @@
 {% load lazyimages_tags %}
 {% load static wagtailuserbar %}
+{% load pwa %}
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
     <head>
+        {% progressive_web_app_meta %}
         <meta charset="utf-8" />
         <meta name="description" content="Locations where rewards are accepted">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
