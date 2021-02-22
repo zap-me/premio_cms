@@ -11,8 +11,6 @@ from wagtail.admin.edit_handlers import PageChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
-from wagtail_color_panel.fields import ColorField
-from wagtail_color_panel.edit_handlers import NativeColorPanel
 
 def geo_coords_dist(lat1, lon1, lat2, lon2):
     from math import sin, cos, sqrt, atan2, radians
