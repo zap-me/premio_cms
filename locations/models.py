@@ -50,9 +50,17 @@ class LocationsIndexPage(Page):
     intro = RichTextField(blank=True)
     show_near_me = models.BooleanField(default=True)
     max_dist_km = models.IntegerField(default=50, verbose_name='maximum distance (km)')
+    promoted_pages_title = models.CharField(blank=True, max_length=250, verbose_name='Promoted Locations Title')
+    promoted_pages_intro = RichTextField(blank=True, verbose_name='Promoted Locations Intro')
 
     def get_context(self, request):
         context = super().get_context(request)
+        # promoted pages
+        indexed_promoted_pages = []
+        promoted_pages = self.promoted_pages.all()
+        for i in range(len(promoted_pages)):
+            indexed_promoted_pages.append((i, promoted_pages[i]))
+        context['indexed_promoted_pages'] = indexed_promoted_pages
         # tags
         tags = {}
         for tag in  Tag.objects.all():
@@ -75,7 +83,11 @@ class LocationsIndexPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full"),
-        InlinePanel('promoted_pages', label="Promoted Locations"),
+        MultiFieldPanel([
+            InlinePanel('promoted_pages', label="Promoted Locations"),
+            FieldPanel('promoted_pages_title', classname="full"),
+            FieldPanel('promoted_pages_intro', classname="full"),
+        ], heading='Promote'),
         MultiFieldPanel([
             FieldPanel('show_near_me'),
             FieldPanel('max_dist_km'),

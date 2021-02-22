@@ -1,26 +1,35 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
 
     {% if request.GET.tag|length %}
-        <h4 class="mt-5 text-center">Showing pages tagged "{{ request.GET.tag }}"</h4>
+        <div class="row">
+            <div class="col">
+                <h4 class="mt-5 text-center">Showing pages tagged "{{ request.GET.tag }}"</h4>
+            </div>
+        </div>
     {% endif %}
 
-    {% for locationpage in locationpages %}
-	 <ul class="list-group px-4 mt-5">
-	     {% if locationpage == locationpages.0 %}
-	        <a href="{% pageurl locationpage %}"><li class="list-group-item active text-center">{{ locationpage.title }}</li></a> 
-             {% else %}
+    <div class="row">
+        {% for page in locationpages %}
+            {% include "location_preview.html" with page=page.specific %}
+        {% empty %}
+            <div class="col">
+                No pages found with that tag.
+            </div>
+        {% endfor %}
+    </div>
 
-	        <a href="{% pageurl locationpage %}"><li class="list-group-item text-center">{{ locationpage.title }}</li></a> 
-             {% endif %}
-        </ul>
-
-    {% empty %}
-        No pages found with that tag.
-    {% endfor %}
-
-   <p class="mt-5 text-center"><a href="{{ page.get_parent.url }}">Return to {{page.get_parent.title}}</a></p>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <a href="{{ page.get_parent.url }}">
+                    <button type="button" class="btn btn-outline-primary">Return to {{page.get_parent.title}}</button>
+                </a>
+            </div>
+        </div>
+    </div>
    
 {% endblock %}
