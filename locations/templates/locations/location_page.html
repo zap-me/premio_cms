@@ -3,7 +3,7 @@
 {% load wagtailcore_tags wagtailimages_tags lazyimages_tags static %}
 
 {% block extra_css %} 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css" integrity="sha384-Kq/qtF0GiQ2/6OINtNcEzBKp7UVvVXB2xAR2HXOT/D+Qw8+Cx2hfokpqKtPEx0b6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
 {% endblock %}
 
 {% block body_class %}template-locationpage{% endblock %}
@@ -78,7 +78,7 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js" integrity="sha384-54FxFm5+OJnD+IWvK/LQO8Is9GGG3QzyyMPoB69QyvWz1lwLpI9m5y2dWzL8qUMs" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
     <script>
         // image swiper
@@ -104,19 +104,20 @@
         const observer = lozad(".lazy");
         observer.observe();
 
-        // openlayers map
+        // leaflet map
         var latLong = [{{page.specific.lat_long}}];
-        var longLat = [latLong[1],latLong[0]];
-        var map = new ol.Map({
-            target: 'map',
-            layers: [ new ol.layer.Tile({ source: new ol.source.OSM() }) ],
-            view: new ol.View({ center: ol.proj.fromLonLat(longLat), zoom: 18 })
+        var map = L.map('map').setView(latLong, 14);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: '<a href="https://www.openstreetmap.org/copyright">Map data &copy;</a>, <a href="https://www.mapbox.com/">Imagery ©</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoiZGpwbmV3dG9uIiwiYSI6ImNrbGhnNTBvcjI3dzEybnBjdXUxZzJzOGgifQ.CPseZC330Gi2_sZIBbUSDg'
+        }).addTo(map);
+        var marker = L.marker(latLong).addTo(map);
+        marker.on('click', function (e) {
+            window.open('https://www.google.com/maps/search/?api=1&query={{page.specific.lat_long}}');
         });
-        var layer = new ol.layer.Vector({
-            source: new ol.source.Vector({
-                features: [ new ol.Feature({ geometry: new ol.geom.Point(ol.proj.fromLonLat(longLat)) }) ]
-            })
-        });
-        map.addLayer(layer);
     </script>
 {% endblock %}
