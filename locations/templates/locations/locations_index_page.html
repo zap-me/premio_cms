@@ -85,11 +85,8 @@
     <script>
         /* setup swipers and lazy loading images */
 
-        function setupGeneralSwiper() {
+        function setupContent() {
             // swipers for tags and near me sections
-            var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-            var slideCount = parseInt(width/300);
-            console.log(`width: ${width}, slideCount: ${slideCount}`);
             var generalSwiper = new Swiper('.swiper-container', {
                 slidesPerView: 2,
                 spaceBetween: 2,
@@ -108,10 +105,6 @@
                     clickable: true,
                 }
             });
-        }
-
-        function setupContent() {
-            setupGeneralSwiper();
 
             // swiper for promotions
             var promotionsSwiper = new Swiper('.swiper-promotions-container', {
@@ -141,8 +134,6 @@
         }
 
         setupContent(); 
-        window.addEventListener("orientationchange", setupGeneralSwiper);
-        window.addEventListener("resize", setupGeneralSwiper);
 
         /* cookie helper functions */
 
