@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'search',
 
     'wagtail.contrib.forms',
+    'wagtail.contrib.settings',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
     'wagtail.sites',
@@ -66,6 +67,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+
 ]
 
 ROOT_URLCONF = 'premio_cms.urls'
@@ -167,6 +169,7 @@ WAGTAIL_SITE_NAME = "premio_cms"
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
 
+
 #django-pwa
 PWA_APP_NAME = 'My App'
 PWA_APP_DESCRIPTION = "My app description"
@@ -197,3 +200,4 @@ PWA_APP_SPLASH_SCREEN = [
 ]
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
+

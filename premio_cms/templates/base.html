@@ -1,3 +1,4 @@
+{% load lazyimages_tags %}
 {% load static wagtailuserbar %}
 {% load pwa %}
 
@@ -7,6 +8,8 @@
         {% progressive_web_app_meta %}
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" integrity="sha384-QJEcIaLC+iJvrlGJMp3iRbm+qfKVAWQzuNMtQpdU/TypHkmNYD/8ZBp/ADFNJZ1u" crossorigin="anonymous">
         <title>
             {% block title %}
                 {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
@@ -30,16 +33,18 @@
 
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
-
-        <div class="container">
+        
+        <div class="container no-overflow" id="parent-container">
             {% block content %}{% endblock %}
         </div>
 
         {# Global javascript #}
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="{% static 'js/premio_cms.js' %}"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js" integrity="sha384-Nb2oPXsaZ9UzrbJmd/oN2JJHSxW4RCBdLlj/Kiubm7np3Jr9/LWnjx3lu7yFxgVa" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
