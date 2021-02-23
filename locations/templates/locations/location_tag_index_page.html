@@ -1,66 +1,47 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags static %}
+{% load wagtailcore_tags wagtailimages_tags lazyimages_tags static %}
 
 {% block content %}
 
     <div class="page-container">
-        <template id="mobile-content">
-            <div class="page-container">
-                {% if request.GET.tag|length %}
-                    <div class="tags-index-back-bar mt-2 d-flex justify-content-start align-items-center anm fdu">
-                        <a href="{{ page.get_parent.url }}">
-                            <img src="{% static 'img/back.png' %}" width="30px" height="30px" />
-                        </a>
-                        <h5 class="mt-2 ml-4">{{ request.GET.tag }}</h5>
-                    </div>
-                {% endif %}
-                
-                <div class="mt-5 index-pg-content anm fdu">
-                    {% for page in locationpages %} 
-                        {% include "tags_page_item.html" with page=page.specific %}
-                    {% empty %}
-                        <div class="col">
-                            No pages found with that tag.
-                        </div>
-                    {% endfor %}
-                </div>
+        {% if request.GET.tag|length %}
+            <div class="tags-index-back-bar mt-2 d-flex justify-content-start align-items-center anm fdu">
+                <a href="{{ page.get_parent.url }}">
+                    <img src="{% static 'img/back.png' %}" width="30px" height="30px" />
+                </a>
+                <h5 class="mt-2 ml-4">{{ request.GET.tag | title }}</h5>
             </div>
-        </template>
-        <template id="desktop-content">
-            {% if request.GET.tag|length %}
-                <div class="desktop-location-nav mt-3 mb-3">
-                    <a href="{{ page.get_parent.url }}">
-                        <img class="ml-3" src="{% static 'img/back.png' %}" width="30px" height="30px" />
+        {% endif %}
+        
+        <div class="mt-2 tag-index-item anm fdu">
+            {% for page in locationpages %} 
+                <div class="card m-1 glass-body">
+                    <a href="{% pageurl page.specific %}">
+                        {% with page.specific.main_image as main_image %}
+                        {% if main_image %}{% lazy_image main_image fill-500x250-c100 class="card-img-top lazy" %}{% endif %}
+                        {% endwith %}
                     </a>
-                    <h5 class="mt-2 ml-4">{{ request.GET.tag }}</h5>
-                </div>
-            {% endif %}
-            <div class="tags-row-wrapped">
-                {% for page in locationpages %} {% include "desktop_tags_page_card.html" with page=page.specific %}
-                {% empty %}
-                    <div class="col">
-                        No pages found with that tag.
+                    <div class="card-body">
+                        <h5 class="card-title">{{ page.specific.title }}</h5>
                     </div>
-                {% endfor %}
-            </div>
-        </template>
+                </div>
+            {% empty %}
+                <div class="col">
+                    No pages found with that tag.
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
+{% endblock %}
+
+{% block extra_js %}
     <script>
-        var pageContentShown = document.querySelector(".page-container");
-        const isMobile = matchMedia("(max-device-width: 844px)").matches;
-        if (isMobile === true) {
-        var mobileTemplate = document.querySelector("#mobile-content");
-        var clone = mobileTemplate.content.cloneNode(true);
-        pageContentShown.appendChild(clone);
-        } else {
-        var desktopTemplate = document.querySelector("#desktop-content");
-        var clone = desktopTemplate.content.cloneNode(true);
-        pageContentShown.appendChild(clone);
-        }
+        // lazy image loader
         const observer = lozad(".lazy");
         observer.observe();
     </script>
 {% endblock %}
+
 

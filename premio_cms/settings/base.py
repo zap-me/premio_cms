@@ -51,11 +51,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # third party
-
     'wagtail_lazyimages', 
+
     # ours
     'locations',
-    'wagtail_color_panel'
 ]
 
 MIDDLEWARE = [
