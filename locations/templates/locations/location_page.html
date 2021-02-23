@@ -19,9 +19,9 @@
     <div class="swiper-location-page-images">
         <div class="swiper-wrapper">
             {% for item in page.gallery_images.all %}
-            <div class="swiper-slide">
-                {% lazy_image item.image fill-600x600-c100 class="location-page-img lazy" %}
-            </div>
+                <div class="swiper-slide">
+                    {% lazy_image item.image fill-600x600-c100 class="location-page-img lazy" %}
+                </div>
             {% endfor %}
         </div>
     </div>
@@ -29,32 +29,32 @@
     <div>
         <div class="anm fdr">
             <div class="location-page-content">
-                    <h2><b>{{ page.title }}</b></h2>
-                    <p class="mobile-address-view mt-3"><i>{{ page.address }}</i></p>
-                    {% if page.mon_hours %}
-                        <div id="accordion">
-                            <button class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Operating Hours 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
-                                </svg>
-                            </button>
-                            <div id="collapseOne" class="collapse" data-parent="#accordion">
-                                <small class="mt-1">
-                                    Monday: {{ page.mon_hours|richtext }}<br>
-                                    Tuesday: {{ page.tue_hours|richtext }}<br>
-                                    Wednesday: {{ page.wed_hours|richtext }}<br>
-                                    Thursday: {{ page.thu_hours|richtext }}<br>
-                                    Friday: {{ page.fri_hours|richtext }}<br>
-                                    Saturday: {{ page.sat_hours|richtext }}<br>
-                                    Sunday: {{ page.sun_hours|richtext }}<br>
-                                </small>
-                            </div>
+                <h2><b>{{ page.title }}</b></h2>
+                <p class="mobile-address-view mt-3"><i>{{ page.address }}</i></p>
+                {% if page.mon_hours %}
+                    <div id="accordion">
+                        <button class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Operating Hours 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                            </svg>
+                        </button>
+                        <div id="collapseOne" class="collapse" data-parent="#accordion">
+                            <small class="mt-1">
+                                Monday: {{ page.mon_hours|richtext }}<br>
+                                Tuesday: {{ page.tue_hours|richtext }}<br>
+                                Wednesday: {{ page.wed_hours|richtext }}<br>
+                                Thursday: {{ page.thu_hours|richtext }}<br>
+                                Friday: {{ page.fri_hours|richtext }}<br>
+                                Saturday: {{ page.sat_hours|richtext }}<br>
+                                Sunday: {{ page.sun_hours|richtext }}<br>
+                            </small>
                         </div>
-                    {% endif %}
-                    <div class="page-body mt-4 body-font">
-                        {{ page.body|richtext }}
                     </div>
+                {% endif %}
+                <div class="page-body mt-4 body-font">
+                    {{ page.body|richtext }}
+                </div>
             </div>
             {% if page.lat_long %}
                 <div class="location-map" id="map"></div>
