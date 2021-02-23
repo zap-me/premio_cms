@@ -1,68 +1,123 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags lazyimages_tags static %}
+
+{% block extra_css %} 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+{% endblock %}
 
 {% block body_class %}template-locationpage{% endblock %}
 
 {% block content %}
 
-    <div class="row">
-        <div class="col">
-            <div class="text-center">
-                <h1>{{ page.title }}</h1>
-                <div class="intro">
-                    {{ page.intro }}
+    <a href="{{ page.get_parent.url }}">
+        <div class="premio-back-btn premio-back-btn anm fdr">
+            <img src="{% static 'img/back.png' %}" width="15px" height="15px"/>
+        </div>
+    </a>
+
+    <div class="swiper-location-page-images">
+        <div class="swiper-wrapper">
+            {% for item in page.gallery_images.all %}
+                <div class="swiper-slide">
+                    {% lazy_image item.image fill-600x600-c100 class="location-page-img lazy" %}
                 </div>
-                <div class="page-body">
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <div class="anm fdr">
+            <div class="location-page-content">
+                <h2><b>{{ page.title }}</b></h2>
+                <p class="mobile-address-view mt-3"><i>{{ page.address }}</i></p>
+                {% if page.mon_hours %}
+                    <div id="accordion">
+                        <button class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Operating Hours 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                            </svg>
+                        </button>
+                        <div id="collapseOne" class="collapse" data-parent="#accordion">
+                            <small class="mt-1">
+                                Monday: {{ page.mon_hours|richtext }}<br>
+                                Tuesday: {{ page.tue_hours|richtext }}<br>
+                                Wednesday: {{ page.wed_hours|richtext }}<br>
+                                Thursday: {{ page.thu_hours|richtext }}<br>
+                                Friday: {{ page.fri_hours|richtext }}<br>
+                                Saturday: {{ page.sat_hours|richtext }}<br>
+                                Sunday: {{ page.sun_hours|richtext }}<br>
+                            </small>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="page-body mt-4 body-font">
                     {{ page.body|richtext }}
                 </div>
             </div>
+            {% if page.lat_long %}
+                <div class="location-map" id="map"></div>
+            {% endif %}
         </div>
     </div>
-
-    <div class="row">
-        {% for item in page.gallery_images.all %}
-            <div class="card shadow-lg p-3 m-3 rounded">
-                {% image item.image fill-320x240 %}
-                <div class="card-body">
-                    <p>{{ item.caption }}</p>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
-    {% if page.lat_long %}
-        <div class="row">
-            <div class="card shadow-lg p-3 mx-auto rounded">
-                <iframe
-                    class="mx-auto d-block"
-                    width="400" height="250" frameborder="0" style="border:0"
-                    src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBKC9GWNbQ95x0CH2iQvOkTZdwoP3aEjYM&center={{page.specific.lat_long}}&zoom=18" allowfullscreen>
-                </iframe>
-            </div>
-        </div>
-    {% endif %}
 
     {% if page.tags.all.count %}
         <div class="row">
             <div class="col m-3">
-                <div class="text-center">
+                <div class="text-center mt-3">
                     <h5>Tags</h5>
                     {% for tag in page.tags.all %}
-                        <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button" class="btn-sm btn-info">{{ tag }}</button></a>
+                        <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag | title }}</a>
                     {% endfor %}
                 </div>
             </div>
         </div>
     {% endif %}
 
-    <div class="row">
-        <div class="col">
-            <div class="text-center">
-                <a href="{{ page.get_parent.url }}">
-                    <button type="button" class="btn btn-outline-primary">Return to {{page.get_parent.title}}</button>
-                </a>
-            </div>
-        </div>
-    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+    <script>
+        // image swiper
+        var locationPageImageSwiper = new Swiper('.swiper-location-page-images', {
+                slidesPerView: 1,
+                spaceBetween: 2,
+                effect: 'coverflow',
+                coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                autoplay: {delay: 2},
+                slideShadows: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            }
+        }); 
+
+        // lazy image loader
+        const observer = lozad(".lazy");
+        observer.observe();
+
+        // leaflet map
+        var latLong = [{{page.specific.lat_long}}];
+        var map = L.map('map').setView(latLong, 14);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: '<a href="https://www.openstreetmap.org/copyright">Map data &copy;</a>, <a href="https://www.mapbox.com/">Imagery ©</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoiZGpwbmV3dG9uIiwiYSI6ImNrbGhnNTBvcjI3dzEybnBjdXUxZzJzOGgifQ.CPseZC330Gi2_sZIBbUSDg'
+        }).addTo(map);
+        var marker = L.marker(latLong).addTo(map);
+        marker.on('click', function (e) {
+            window.open('https://www.google.com/maps/search/?api=1&query={{page.specific.lat_long}}');
+        });
+    </script>
 {% endblock %}
