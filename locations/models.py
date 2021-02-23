@@ -45,7 +45,6 @@ def str2latlon(s):
     return lat, lon
 
 class LocationsIndexPage(Page):
-
     intro = RichTextField(blank=True)
     show_near_me = models.BooleanField(default=True)
     max_dist_km = models.IntegerField(default=50, verbose_name='maximum distance (km)')
