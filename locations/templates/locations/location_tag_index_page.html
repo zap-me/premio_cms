@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags static %}
+{% load wagtailcore_tags wagtailimages_tags lazyimages_tags static %}
 
 {% block content %}
 
@@ -19,7 +19,7 @@
                 <div class="card m-1 glass-body">
                     <a href="{% pageurl page.specific %}">
                         {% with page.specific.main_image as main_image %}
-                            {% if main_image %}{% image main_image fill-500x250-c100 class="card-img-top lazy" %}{% endif %}
+                            {% if main_image %}{% lazy_image main_image fill-500x250-c100 class="card-img-top lazy" %}{% endif %}
                         {% endwith %}
                     </a>
                     <div class="card-body">
