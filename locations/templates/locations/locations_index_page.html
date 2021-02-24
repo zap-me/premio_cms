@@ -165,20 +165,16 @@
 
         /* set geolocation cookie for 'near me' locations */
 
-        function geoLocation(position) {
-            console.log('geolocation:' + position);
-            setCookie('geo', position.coords.latitude + ',' + position.coords.longitude, 300);
-            location.reload();
-        }
-
-        function geoError(error){
-            console.log("error " + error.code);
-        }
-    
         if (getCookie('geo') == null) {
             console.log('requesting geolocation..');
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(geoLocation, geoError);
+                navigator.geolocation.getCurrentPosition(success => {
+                    console.log('geolocation: ' + success);
+                    setCookie('geo', success.coords.latitude + ',' + success.coords.longitude, 300);
+                    location.reload();
+                }, failure => {
+                    console.log('geolocation error: ' + failure.message);
+                });
             }
             else {
                 console.error('geolocation not supported');
