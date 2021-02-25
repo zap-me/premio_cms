@@ -182,13 +182,13 @@ PWA_APP_START_URL = '/'
 PWA_APP_STATUS_BAR_COLOR = 'default'
 PWA_APP_ICONS = [
     {
-        'src': '/static/images/my_app_icon.png',
+        'src': '/static/img/icon.png',
         'sizes': '160x160'
     }
 ]
 PWA_APP_ICONS_APPLE = [
     {
-        'src': '/static/images/my_apple_icon.png',
+        'src': '/static/img/icon.png',
         'sizes': '160x160'
     }
 ]
