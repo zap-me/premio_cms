@@ -1,0 +1,21 @@
+{% load wagtailcore_tags wagtailimages_tags lazyimages_tags %}
+{% with p.promoted_page.specific as promoted_page %}
+    <div class="swiper-slide promo-card">
+        <a href="{% pageurl promoted_page %}">
+            <div class="card shadow-lg">
+                {% with promoted_page.main_image as main_image %}
+                    {% if main_image %}{% lazy_image main_image fill-748x380-c100 class="card-img-top lazy" %}{% endif %}
+                {% endwith %}
+                <div class="card-body card-color">
+                    <h5 class="card-title">{{ promoted_page.title }}</h5>
+                    <button class="color-fluid">
+                        <a href="{% pageurl promoted_page %}" class="mt-2 white">Learn more</a>
+                    </button>
+                </div>
+            </div>
+        </a>
+        <div class="promotion-caption">
+            {{ p.caption }}
+        </div>
+    </div>
+{% endwith %}
