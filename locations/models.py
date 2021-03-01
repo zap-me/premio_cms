@@ -62,7 +62,7 @@ class LocationsIndexPage(Page):
         # tags
         tags = {}
         for tag in Tag.objects.all():
-            tags[tag] =  LocationPage.objects.filter(tags__name=tag).live()
+            tags[tag] =  LocationPage.objects.filter(tags__name=tag).live().child_of(self)
         context['locationpagetags'] = tags
         # locations near me
         locationsnearme = []
