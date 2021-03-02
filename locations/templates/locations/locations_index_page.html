@@ -42,7 +42,9 @@
                 <div class="tag-content mb-4">
                     <div class="content-title-holder anm fdu">
                         <h2 class="ml-4">{{ tag | title }}</h2>
-                        <a class="a-color" href="{% slugurl 'tags' %}?tag={{ tag }}"><p class="mr-3  mt-3">See all</p></a>
+                        {% if tagspage %}
+		            <a class="a-color" href="{{ tagspage.slug }}?tag={{ tag }}"><p class="mr-3  mt-3">See all</p></a>
+                        {% endif %}
                     </div>
                     <div class="swiper-container">
                         <div class="swiper-wrapper">

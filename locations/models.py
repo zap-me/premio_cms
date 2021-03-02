@@ -77,6 +77,8 @@ class LocationsIndexPage(Page):
                         if d <= self.max_dist_km:
                             locationsnearme.append(page)
         context['locationsnearme'] = locationsnearme
+        locationtagindexset=LocationTagIndexPage.objects.live().child_of(self)
+        context['tagspage']=locationtagindexset[0]
         return context
 
     content_panels = Page.content_panels + [
