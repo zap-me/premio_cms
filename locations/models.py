@@ -178,7 +178,8 @@ class LocationTagIndexPage(Page):
 
         # Filter by tag
         tag = request.GET.get('tag')
-        locationpages = LocationPage.objects.filter(tags__name=tag).live()
+        locationsindexset= LocationsIndexPage.objects.live().parent_of(self)
+        locationpages = LocationPage.objects.filter(tags__name=tag).live().descendant_of(locationsindexset[0])
 
         # Update template context
         context = super().get_context(request)
