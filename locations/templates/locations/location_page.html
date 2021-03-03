@@ -68,7 +68,7 @@
                 <div class="text-center mt-3">
                     <h5>Tags</h5>
                     {% for tag in page.tags.all %}
-                        <a href="{% slugurl 'tags' %}?tag={{ tag }}" class="btn btn-primary">{{ tag | title }}</a>
+                        <a href="{{ tagspage.get_url }}?tag={{ tag }}" class="btn btn-primary">{{ tag | title }}</a>
                     {% endfor %}
                 </div>
             </div>
