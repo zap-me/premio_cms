@@ -77,8 +77,7 @@ class LocationsIndexPage(Page):
                         if d <= self.max_dist_km:
                             locationsnearme.append(page)
         context['locationsnearme'] = locationsnearme
-        locationtagindexset=LocationTagIndexPage.objects.live().child_of(self)
-        context['tagspage']=locationtagindexset[0]
+        context['tagspage'] = LocationTagIndexPage.objects.live().child_of(self).first()
         return context
 
     content_panels = Page.content_panels + [
@@ -164,8 +163,7 @@ class LocationPage(Page):
 
     def get_context(self, request):
         context = super().get_context(request)
-        locationtagindexset=LocationTagIndexPage.objects.live().sibling_of(self)
-        context["tagspage"]=locationtagindexset[0]
+        context['tagspage'] = LocationTagIndexPage.objects.live().child_of(LocationsIndexPage.objects.live().ancestor_of(self).first()).first()
         return context
 
 class LocationPageGalleryImage(Orderable):
@@ -186,8 +184,7 @@ class LocationTagIndexPage(Page):
 
         # Filter by tag
         tag = request.GET.get('tag')
-        locationsindexset= LocationsIndexPage.objects.live().parent_of(self)
-        locationpages = LocationPage.objects.filter(tags__name=tag).live().descendant_of(locationsindexset[0])
+        locationpages = LocationPage.objects.filter(tags__name=tag).live().descendant_of(self.get_parent())
 
         # Update template context
         context = super().get_context(request)
