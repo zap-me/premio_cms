@@ -162,6 +162,12 @@ class LocationPage(Page):
         )
     ]
 
+    def get_context(self, request):
+        context = super().get_context(request)
+        locationtagindexset=LocationTagIndexPage.objects.live().sibling_of(self)
+        context["tagspage"]=locationtagindexset[0]
+        return context
+
 class LocationPageGalleryImage(Orderable):
     page = ParentalKey(LocationPage, on_delete=models.CASCADE, related_name='gallery_images')
     image = models.ForeignKey(
