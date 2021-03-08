@@ -2,11 +2,16 @@
 
 {% load wagtailcore_tags wagtailimages_tags lazyimages_tags static %}
 
-{% block content %}
+{% block extra_css %}
 
     {% if parentpage.custom_css %}
-        <link rel="stylesheet" href="http://127.0.0.1:8000{{ parentpage.custom_css.url }}" media="all"> 
+        <link rel="stylesheet" href="{{ parentpage.custom_css.url }}" media="all"> 
     {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
     <div class="page-container">
         {% if request.GET.tag|length %}
             <div class="tags-index-back-bar mt-2 d-flex justify-content-start align-items-center anm fdu">

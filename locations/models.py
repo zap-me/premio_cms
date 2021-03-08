@@ -168,7 +168,7 @@ class LocationPage(Page):
         context = super().get_context(request)
         # the first tag index page which is a child of the parent location index of this page
         context['tagspage'] = LocationTagIndexPage.objects.live().child_of(LocationsIndexPage.objects.live().ancestor_of(self).first()).first()
-        context['parentpage'] = LocationsIndexPage.objects.live().parent_of(self).first()
+        context['parentpage'] = LocationsIndexPage.objects.live().ancestor_of(self).first()
         return context
 
 class LocationPageGalleryImage(Orderable):
@@ -189,11 +189,9 @@ class LocationTagIndexPage(Page):
 
         # Filter by tag
         tag = request.GET.get('tag')
-        # the location pages which are descendants of the parent page
-        locationpages = LocationPage.objects.filter(tags__name=tag).live().descendant_of(self.get_parent())
 
         # Update template context
         context = super().get_context(request)
-        context['locationpages'] = locationpages
+        context['locationpages'] = LocationPage.objects.filter(tags__name=tag).live().descendant_of(self.get_parent())
         context['parentpage'] = LocationsIndexPage.objects.live().parent_of(self).first()
         return context

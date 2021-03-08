@@ -4,15 +4,15 @@
 
 {% block extra_css %} 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    {% if parentpage.custom_css %}
+        <link rel="stylesheet" href="{{ parentpage.custom_css.url }}" media="all"> 
+    {% endif %}
 {% endblock %}
 
 {% block body_class %}template-locationpage{% endblock %}
 
 {% block content %}
 
-    {% if parentpage.custom_css %}
-        <link rel="stylesheet" href="http://127.0.0.1:8000{{ parentpage.custom_css.url }}" media="all"> 
-    {% endif %}
     <a href="{{ page.get_parent.url }}">
         <div class="premio-back-btn premio-back-btn anm fdr">
             <img src="{% static 'img/back.png' %}" width="15px" height="15px"/>

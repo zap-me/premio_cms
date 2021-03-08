@@ -2,13 +2,20 @@
 
 {% load wagtailcore_tags wagtailimages_tags %}
 
+{% block extra_css %}
+
+    {% if page.custom_css %}
+        <link rel="stylesheet" href="{{ page.custom_css.url }}" media="all"> 
+    {% endif %}
+
+{% endblock %}
+
 {% block body_class %}template-locationsindexpage{% endblock %}
 
 {% block content %}
 
     <div>
 
-        <link rel="stylesheet" href="http://127.0.0.1:8000{{ page.custom_css.url }}" media="all"> 
         {% if page.promoted_pages.count %}
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
