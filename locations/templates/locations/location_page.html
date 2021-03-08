@@ -9,7 +9,9 @@
 {% block body_class %}template-locationpage{% endblock %}
 
 {% block content %}
-    <link rel="stylesheet" href="http://127.0.0.1:8000{{ cssslug.custom_css.url }}" media="all"> 
+    {% if parentpage.custom_css %}
+        <link rel="stylesheet" href="http://127.0.0.1:8000{{ parentpage.custom_css.url }}" media="all"> 
+    {% endif %}
     <a href="{{ page.get_parent.url }}">
         <div class="premio-back-btn premio-back-btn anm fdr">
             <img src="{% static 'img/back.png' %}" width="15px" height="15px"/>
