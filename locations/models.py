@@ -168,6 +168,7 @@ class LocationPage(Page):
         context = super().get_context(request)
         # the first tag index page which is a child of the parent location index of this page
         context['tagspage'] = LocationTagIndexPage.objects.live().child_of(LocationsIndexPage.objects.live().ancestor_of(self).first()).first()
+        context['cssslug'] = LocationsIndexPage.objects.live().parent_of(self).first()
         return context
 
 class LocationPageGalleryImage(Orderable):
