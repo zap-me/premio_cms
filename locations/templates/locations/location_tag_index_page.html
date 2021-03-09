@@ -2,6 +2,14 @@
 
 {% load wagtailcore_tags wagtailimages_tags lazyimages_tags static %}
 
+{% block extra_css %}
+
+    {% if parentpage.custom_css %}
+        <link rel="stylesheet" href="{{ parentpage.custom_css.url }}" media="all"> 
+    {% endif %}
+
+{% endblock %}
+
 {% block content %}
 
     <div class="page-container">

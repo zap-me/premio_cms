@@ -2,6 +2,14 @@
 
 {% load wagtailcore_tags wagtailimages_tags %}
 
+{% block extra_css %}
+
+    {% if page.custom_css %}
+        <link rel="stylesheet" href="{{ page.custom_css.url }}" media="all"> 
+    {% endif %}
+
+{% endblock %}
+
 {% block body_class %}template-locationsindexpage{% endblock %}
 
 {% block content %}
